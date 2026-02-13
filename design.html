@@ -455,12 +455,12 @@
 
     .filter-btn {
         white-space: nowrap;
-        padding: 8px 18px !important;
-        font-size: 0.85rem !important;
+        padding: 8px 18px;
+        font-size: 0.85rem;
     }
 
     .portfolio-section {
-        padding: 0 15px 60px !important;
+        padding: 0 15px 60px;
     }
 
     .portfolio-grid {
@@ -469,14 +469,14 @@
     }
 
     .portfolio-item {
-        padding: 5px !important;
-        margin-bottom: 0 !important;
-        height: auto !important;
+        padding: 0 0 30px 0;
+        margin-bottom: 0;
+        height: auto;
     }
 
     .portfolio-item-inner {
-        border-radius: 8px !important;
-        height: auto !important;
+        border-radius: 8px;
+        height: auto;
     }
 
     .portfolio-item.portrait {
@@ -492,8 +492,8 @@
     }
 
     .portfolio-category {
-        font-size: 0.7rem !important;
-        margin-bottom: 5px !important;
+        font-size: 0.7rem;
+        margin-bottom: 5px;
     }
 
     .tag {
@@ -502,23 +502,32 @@
     }
 
     .modal {
-        padding: 10px !important; 
-        align-items: center !important;
+        padding: 30px !important; 
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal.active {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
     }
 
     .modal-content {
-        padding: 30px 20px 50px 20px !important;
-        margin: 0 !important; 
-        width: 100% !important;
-        border-radius: 15px !important;
-        max-height: 60vh;
-        overflow-y: auto !important; 
-        display: block !important;
+        padding: 30px 20px 50px 20px;
+        margin: 20px auto;
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        max-height: none;
+        background: #1a1a1a;
+        border-radius: 15px;
+        overflow-y: auto; 
+        display: block;
     }
 
     .modal-title {
         font-size: 1.5rem !important; 
-        margin-bottom: 5px !important; 
+        margin-bottom: -1px !important; 
         text-align: left; 
         }
 
@@ -531,8 +540,8 @@
 
     .modal-category {
         color: #667eea;
-        font-size: 1.2rem;
-        margin-bottom: 5px;
+        font-size: 0.9rem;
+        margin-bottom: 0px;
         display: block;
     }
 
@@ -542,8 +551,7 @@
         line-height: 1.5;
         margin-bottom: 40px;
         white-space: pre-line;
-        margin-top: 15px !important; 
-        border-top: 1px solid rgba(255,255,255,0.1); 
+        margin-top: 10px !important;  
         grid-template-columns: 1fr 1fr !important;
     }
 

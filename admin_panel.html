@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Portfolio Manager</title>
+    <link rel="icon" type="image/png" href="assets/images/Logo.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- SortableJS for Drag & Drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Login Page */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: #1a1a1a;
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-header p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 15px;
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .login-btn, .action-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .login-btn:hover, .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: rgba(245, 87, 108, 0.1);
+            border: 1px solid #f5576c;
+            color: #f5576c;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px; 
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            border-radius: 20px;
+            border: 2px solid #0a0a0a; 
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); 
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            background: #1a1a1a;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 30px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header h2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 30px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border-left: 3px solid #667eea;
+        }
+
+        .menu-item i {
+            width: 20px;
+        }
+
+        .logout-btn {
+            margin: 20px 30px;
+            padding: 12px 20px;
+            background: rgba(245, 87, 108, 0.1);
+            border: 1px solid #f5576c;
+            border-radius: 8px;
+            color: #f5576c;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(245, 87, 108, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .content-section {
+            display: none; 
+            padding: 20px;
+        }
+
+        .content-section.active {
+            display: block !important;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: #888;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-card h3 {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn.secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            width: auto;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .upload-area p {
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .upload-area input[type="file"] {
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        /* Content List */
+        .content-list {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .content-list h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .item-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .item-info p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+        }
+
+        .icon-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .icon-btn.delete:hover {
+            background: rgba(245, 87, 108, 0.1);
+            border-color: #f5576c;
+            color: #f5576c;
+        }
+
+        .icon-btn.edit:active {
+            background: #667eea;
+            color: white;
+        }
+
+        .item-info img {
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999 !important;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 10000;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        /* Settings Grid */
+        .settings-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .settings-card {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .settings-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(67, 233, 123, 0.1);
+            border: 1px solid #43e97b;
+            color: #43e97b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .login-box {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="deleteModal" class="modal">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <div style="font-size: 3rem; color: #667eea; margin-bottom: 20px;">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <h3 style="margin-bottom: 10px;">Yakin mau hapus, Bos?</h3>
+        <p style="color: #888; margin-bottom: 30px;">Ngehapus postingan aja bisa, masa kenangan sama Desti nggak bisa dihapus? Payah.</p>
+        <div style="display: flex; gap: 15px;">
+            <button class="action-btn secondary" onclick="closeDeleteModal()" style="flex: 1;">Nggak deh</button>
+            <button id="confirmDeleteBtn" class="action-btn" style="flex: 1; background: #667eea;">Hapus Aja!</button>
+        </div>
+    </div>
+</div>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>🔐 Admin Panel</h1>
+                <p>Portfolio Management System</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                Username atau password salah!
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Farhanul Hakim</h2>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active" onclick="showSection('overview')">
+                    <i class="fas fa-home"></i>
+                    <span>Overview</span>
+                </div>
+                <div class="menu-item" onclick="showSection('design')">
+                    <i class="fas fa-palette"></i>
+                    <span>Design</span>
+                </div>
+                <div class="menu-item" onclick="showSection('photography')">
+                    <i class="fas fa-camera"></i>
+                    <span>Photography</span>
+                </div>
+                <div class="menu-item" onclick="showSection('videography')">
+                    <i class="fas fa-video"></i>
+                    <span>Videography</span>
+                </div>
+                <div class="menu-item" onclick="showSection('content')">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Homepage</span>
+                </div>
+                <div class="menu-item" onclick="showSection('settings')">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+            </div>
+            <div class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Overview Section -->
+            <div class="content-section active" id="overview">
+                <div class="section-header">
+                    <h2>Overview</h2>
+                    <p>Dashboard management</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Design</h3>
+                        <div class="number" id="totalDesign">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Photos</h3>
+                        <div class="number" id="totalPhotos">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Videos</h3>
+                        <div class="number" id="totalVideos">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total</h3>
+                        <div class="number" id="totalAll">0</div>
+                    </div>
+                </div>
+
+                <div class="content-list">
+                    <h3>Quick Actions</h3>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <h4>Add New Design</h4>
+                            <p>Upload design portfolio ke website</p>
+                        </div>
+                        <button class="icon-btn" onclick="showSection('design')">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <h4>Add New Photo</h4>
+                            <p>Upload foto ke gallery</p>
+                        </div>
+                        <button class="icon-btn" onclick="showSection('photography')">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <h4>Add New Video</h4>
+                            <p>Upload video ke portfolio</p>
+                        </div>
+                        <button class="icon-btn" onclick="showSection('videography')">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <h4>Edit Website Content</h4>
+                            <p>Update text, bio, social media links</p>
+                        </div>
+                        <button class="icon-btn" onclick="showSection('content')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Section -->
+            <div class="content-section" id="design">
+                <div class="section-header">
+                    <h2>Design Portfolio</h2>
+                    <p>Manage design projects</p>
+                </div>
+
+                <div class="success-message" id="designSuccess">
+                    Project berhasil ditambahkan!
+                </div>
+
+                <button class="action-btn" onclick="openModal('designModal')">
+                    <i class="fas fa-plus"></i> Add New Design Project
+                </button>
+
+                <div class="content-list">
+                    <h3>Design Projects</h3>
+                    <div id="designListContainer">
+                        <p style="color: #666; padding: 20px;">Memanggil data design...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photography Section -->
+            <div class="content-section" id="photography">
+                <div class="section-header">
+                    <h2>Photography Portfolio</h2>
+                    <p>Manage photo collections</p>
+                </div>
+
+                <div class="success-message" id="photoSuccess">
+                    Foto berhasil ditambahkan!
+                </div>
+
+                <button class="action-btn" onclick="openModal('photoModal')">
+                    <i class="fas fa-plus"></i> Add New Photo Project
+                </button>
+
+                <div class="content-list">
+                    <h3>Yang Udah di Upload</h3>
+                    <div id="photoListContainer">
+                        <p style="color: #666; padding: 20px;">Memanggil data foto...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videography Section -->
+            <div class="content-section" id="videography">
+                <div class="section-header">
+                    <h2>Videography Portfolio</h2>
+                    <p>Manage video projects</p>
+                </div>
+
+                <div class="success-message" id="videoSuccess">
+                    Video berhasil ditambahkan!
+                </div>
+
+                <button class="action-btn" onclick="openModal('videoModal')">
+                    <i class="fas fa-plus"></i> Add New Video Project
+                </button>
+
+                <div class="content-list">
+                    <h3>Video Projects List</h3>
+                    <div id="videoListContainer">
+                        <p style="color: #666; padding: 20px;">Memanggil data video...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Management Section -->
+            <div class="content-section" id="content">
+                <div class="section-header">
+                    <h2>Website Content</h2>
+                    <p>Edit semua text di website</p>
+                </div>
+
+                <div class="success-message" id="contentSuccess">
+                    Content berhasil diupdate!
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Profile Information</h3>
+                        <div class="form-group">
+                            <label>Nama</label>
+                            <input type="text" id="profileName" value="Nama Kamu" placeholder="Nama lo">
+                        </div>
+                        <div class="form-group">
+                            <label>Tagline</label>
+                            <input type="text" id="profileTagline" value="Visual Creator & Storyteller" placeholder="Tagline lo">
+                        </div>
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea id="profileBio" placeholder="About me...">Gue adalah seorang creative yang passionate di dunia visual. Dari design grafis, fotografi, sampe videografi - semua gue jalani dengan dedikasi penuh.</textarea>
+                        </div>
+                        <button class="action-btn" onclick="saveProfile()">
+                            <i class="fas fa-save"></i> Save Profile
+                        </button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Social Media Links</h3>
+                        <div class="form-group">
+                            <label>Instagram</label>
+                            <input type="text" id="socialInstagram" placeholder="https://instagram.com/username">
+                        </div>
+                        <div class="form-group">
+                            <label>Behance</label>
+                            <input type="text" id="socialBehance" placeholder="https://behance.net/username">
+                        </div>
+                        <div class="form-group">
+                            <label>LinkedIn</label>
+                            <input type="text" id="socialLinkedin" placeholder="https://linkedin.com/in/username">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp</label>
+                            <input type="text" id="socialWhatsapp" placeholder="628123456789">
+                        </div>
+                        <button class="action-btn" onclick="saveSocial()">
+                            <i class="fas fa-save"></i> Save Social Links
+                        </button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Contact Email</h3>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="contactEmail" placeholder="your@email.com">
+                        </div>
+                        <button class="action-btn" onclick="saveContact()">
+                            <i class="fas fa-save"></i> Save Email
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="content-section" id="settings">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                    <p>Admin panel settings</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Change Password</h3>
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" id="currentPassword" placeholder="Password sekarang">
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" id="newPassword" placeholder="Password baru">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="confirmPassword" placeholder="Konfirmasi password">
+                        </div>
+                        <button class="action-btn" onclick="changePassword()">
+                            <i class="fas fa-key"></i> Change Password
+                        </button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Export Data</h3>
+                        <p style="color: #888; margin-bottom: 20px;">Download semua data portfolio sebagai backup</p>
+                        <button class="action-btn secondary" onclick="exportData()">
+                            <i class="fas fa-download"></i> Export All Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Design Modal -->
+    <div class="modal" id="designModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('designModal')">×</span>
+            <h3>Add Design Project</h3>
+            
+            <form id="designForm">
+                <div class="form-group">
+                    <label>Upload Cover Image (Cuma 1 Foto buat Thumbnail Depan)</label>
+                    <div class="upload-area" onclick="document.getElementById('designCoverFile').click()">
+                        <i class="fas fa-image"></i>
+                        <p>Klik buat Upload Cover</p>
+                        <div id="designCoverPreview" style="margin-top: 15px;"></div>
+                        <input type="file" id="designCoverFile" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Upload Design Images (Multiple)</label>
+                    <div class="upload-area" onclick="document.getElementById('designFile').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Upload Kesini Bos</p>
+                        <p style="font-size: 0.8rem; color: #666;">PNG, JPG, WebP (Max 5MB)</p>
+                        <div id="designPreviewContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 15px;"></div>
+                        <input type="file" id="designFile" accept="image/*" multiple style="display: none;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select id="designCategory">
+                        <option value="Social Media">Social Media Design</option>
+                        <option value="Poster">Poster</option>
+                        <option value="Banner">Banner</option>
+                        <option value="Book">Book</option>
+                        <option value="Various">Various</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Judul Project</label>
+                    <input type="text" id="designTitle" placeholder="Contoh: Brand Identity TechFlow" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Deskripsi (optional)</label>
+                    <textarea id="designDescription" placeholder="Deskripsi project..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Client</label>
+                    <input type="text" id="designClient" placeholder="Nama client">
+                </div>
+
+                <div class="form-group">
+                    <label>Tools</label>
+                    <input type="text" id="designTools" placeholder="Contoh: Photoshop, Illustrator, Figma">
+                </div>
+
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="text" id="designYear" value="2025" placeholder="2025">
+                </div>
+
+                <div class="form-group">
+                    <label>Tags (Pisahkan dengan koma)</label>
+                    <input type="text" id="designTags" placeholder="Contoh: Brand Identity, UI/UX, Web">
+                </div>
+
+                <button type="submit" class="action-btn">
+                    <i class="fas fa-save"></i> Save Design Project
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div class="modal" id="photoModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('photoModal')">×</span>
+            <h3>Add Photo Project</h3>
+
+            <div class="form-group">
+                <label>Upload Cover Image (Khusus Thumbnail Depan)</label>
+                <div class="upload-area" onclick="document.getElementById('photoCoverFile').click()">
+                    <i class="fas fa-image"></i>
+                    <p>Klik buat Upload Cover</p>
+                    <div id="photoCoverPreview" style="margin-top: 15px;"></div>
+                    <input type="file" id="photoCoverFile" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            
+            <form id="photoForm">
+                <div class="form-group">
+                    <label>Upload Photos</label>
+                    <div class="upload-area" onclick="document.getElementById('photoFile').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Klik Ini Bos</p>
+                        <p style="font-size: 0.8rem; color: #666;">PNG, JPG, WebP</p>
+                        <div id="photoPreviewContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 15px;"></div>
+                        <input type="file" id="photoFile" accept="image/*" multiple style="display: none;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Layout Grid</label>
+                    <select id="photoLayout">
+                        <option value="portrait">Portrait (Default)</option>
+                        <option value="landscape">Landscape</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select id="photoCategory">
+                        <option value="Event">Event</option>
+                        <option value="Graduation">Graduation</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Journalism">Journalism</option>
+                        <option value="Various">Various</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Judul</label>
+                    <input type="text" id="photoTitle" placeholder="Contoh: Summer Vibes 2024" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea id="photoDescription" placeholder="Ceritain Bos kek lu cerita di sakitin sama Desti"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="photoLocation" placeholder="Lokasi foto">
+                </div>
+
+                <div class="form-group">
+                    <label>Client</label>
+                    <input type="text" id="photoClient" placeholder="Nama client / Event">
+                </div>
+
+                <div class="form-group">
+                    <label>Tags (Pisahkan dengan koma)</label>
+                    <input type="text" id="photoTags" placeholder="Contoh: Journalism, Black & White, Portrait">
+                </div>
+
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="text" id="photoYear" value="2025" placeholder="2025">
+                </div>
+
+                <button type="submit" class="action-btn">
+                    <i class="fas fa-save"></i> Save Photo Project
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('videoModal')">×</span>
+            <h3>Add Video Project</h3>
+            
+            <form id="videoForm">
+                <div class="form-group">
+                    <label>YouTube Video URL</label>
+                    <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
+                    <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">
+                        Paste full YouTube URL
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select id="videoCategory">
+                        <option value="Event">Event</option>
+                        <option value="Wedding">Wedding</option>
+                        <option value="Content">Content</option>
+                        <option value="Various">Various</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Judul Video</label>
+                    <input type="text" id="videoTitle" placeholder="Contoh: Music Festival 2024" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Format Video (Ukuran Cover)</label>
+                    <select id="videoOrientation">
+                        <option value="landscape">Landscape (16:9 - YouTube Standar)</option>
+                        <option value="portrait">Portrait (9:16 - TikTok/Shorts)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Client</label>
+                    <input type="text" id="videoClient" placeholder="Nama client">
+                </div>
+
+                <div class="form-group">
+                    <label>Duration</label>
+                    <input type="text" id="videoDuration" placeholder="3:45">
+                </div>
+
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="text" id="videoYear" value="2025" placeholder="2025">
+                </div>
+
+                <div class="form-group">
+                    <label>Tags (Pisahkan dengan koma)</label>
+                    <input type="text" id="videoTags" placeholder="Contoh: Corporate, Cinematic, 4K">
+                </div>
+
+                <button type="submit" class="action-btn">
+                    <i class="fas fa-save"></i> Save Video Project
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal" style="z-index: 99999 !important;">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <div style="font-size: 3.5rem; color: #667eea; margin-bottom: 20px;">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 id="successTitle" style="margin-bottom: 10px;">Ciee Postingan Baru</h3>
+        <p id="successMessage" style="color: #888; margin-bottom: 30px;">Baru posting sekarang Bos? Kirain masih sibuk nginget masa lalu.</p>
+        <button class="action-btn" onclick="closeSuccessModal()" style="background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);">Bacot ahh!</button>
+    </div>
+    </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, setDoc, getDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, updatePassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCsi8-2A9thmiz_Uymt7bBZWaaErPy5_Cw",
+    authDomain: "farhanul-studio.firebaseapp.com",
+    projectId: "farhanul-studio",
+    storageBucket: "farhanul-studio.firebasestorage.app",
+    messagingSenderId: "720414517447",
+    appId: "1:720414517447:web:698d6f69316e18992476e2"
+  };
+
+  const CLOUD_NAME = 'di5buwg9t'; 
+  const UPLOAD_PRESET = 'farhanulstudio'; 
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  let currentEditId = null; 
+  let currentEditCol = ''; 
+
+  window.showSection = (id) => {
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(s => s.classList.remove('active'));
+    
+    const target = document.getElementById(id);
+    if (target) target.classList.add('active');
+
+    document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+    const activeMenu = document.querySelector(`.menu-item[onclick*="${id}"]`);
+    if (activeMenu) activeMenu.classList.add('active');
+  };
+
+ // --- TARUH DI SEKITAR BARIS 1015 (DI ATAS prosesSubmit) ---
+window.showSuccess = (title, msg) => {
+    const modal = document.getElementById('successModal');
+    if (modal) {
+        document.getElementById('successTitle').innerText = title;
+        document.getElementById('successMessage').innerText = msg;
+        modal.classList.add('active');
+    }
+};
+
+window.closeSuccessModal = () => {
+    document.getElementById('successModal').classList.remove('active');
+    location.reload(); // Refresh-nya pindah ke sini bos biar gak kecepetan!
+};
+
+  async function loadAdminData() {
+    try {
+      const designSnap = await getDocs(query(collection(db, "designs"), orderBy("order", "asc")));
+      const photoSnap = await getDocs(query(collection(db, "photos"), orderBy("order", "asc")));
+      const videoSnap = await getDocs(query(collection(db, "videos"), orderBy("order", "asc")));
+
+      if(document.getElementById('totalDesign')) document.getElementById('totalDesign').innerText = designSnap.size;
+      if(document.getElementById('totalPhotos')) document.getElementById('totalPhotos').innerText = photoSnap.size;
+      if(document.getElementById('totalVideos')) document.getElementById('totalVideos').innerText = videoSnap.size;
+      if(document.getElementById('totalAll')) document.getElementById('totalAll').innerText = designSnap.size + photoSnap.size + videoSnap.size;
+
+      renderList(designSnap, 'designListContainer', 'designs');
+      renderList(photoSnap, 'photoListContainer', 'photos'); 
+      renderList(videoSnap, 'videoListContainer', 'videos'); 
+    } catch (e) { console.error("Error Load:", e); }
+  }
+
+  function renderList(snap, containerId, col) {
+    const cont = document.getElementById(containerId);
+    if(!cont) return;
+    cont.innerHTML = '';
+    
+    snap.forEach(docSnap => {
+      const d = docSnap.data();
+      let displayImg = 'https://via.placeholder.com/150';
+      
+      if(col === 'videos' && d.youtubeId) {
+        displayImg = `https://img.youtube.com/vi/${d.youtubeId}/hqdefault.jpg`;
+      } else {
+        const photos = d.images || (d.imageUrl ? [d.imageUrl] : []);
+        if(photos.length > 0) displayImg = photos[0];
+      }
+
+      const div = document.createElement('div');
+      div.className = 'list-item';
+      div.setAttribute('data-id', docSnap.id);
+      div.innerHTML = `
+        <div class="item-info" 
+        style="display:flex; 
+        align-items:center; 
+        gap:15px;">
+
+          <i class="fas fa-grip-vertical drag-handle" 
+            style="color:#667eea; 
+            cursor:grab; 
+            font-size:18px;"></i>
+
+          <img src="${displayImg}" 
+            style="width:50px; 
+            height:50px; 
+            object-fit:cover; 
+            border-radius:8px; 
+            border:1px solid #333;">
+          <div>
+
+            <h4 style="margin:0; 
+              font-size:14px; 
+              color:#fff;">${d.title}</h4>
+
+            <p style="margin:0; 
+              font-size:12px; 
+              color:#888;">${d.category}</p>
+          </div>
+        </div>
+       <div class="item-actions">
+         <button class="icon-btn edit" onclick="window.bukaEdit('${docSnap.id}', '${col}')"><i class="fas fa-edit"></i></button>
+         <button class="icon-btn delete" onclick="window.hapusItem('${docSnap.id}', '${col}')"><i class="fas fa-trash"></i></button>
+       </div>
+       `;
+       cont.appendChild(div);
+    });
+
+    // Init Sortable after rendering
+    initSortable(containerId, col);
+  }
+
+  // Initialize Sortable for drag & drop reordering
+  function initSortable(containerId, collection) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    new Sortable(container, {
+      handle: '.drag-handle',
+      animation: 150,
+      ghostClass: 'sortable-ghost',
+      onEnd: async function(evt) {
+        await updateOrder(containerId, collection);
+      }
+    });
+  }
+
+  // Update order field in Firestore after drag & drop
+  async function updateOrder(containerId, collection) {
+    const container = document.getElementById(containerId);
+    const items = container.querySelectorAll('.list-item');
+    const batch = writeBatch(db);
+
+    items.forEach((item, index) => {
+      const docId = item.getAttribute('data-id');
+      const docRef = doc(db, collection, docId);
+      batch.update(docRef, { order: index });
+    });
+
+    try {
+      await batch.commit();
+      console.log('Order updated successfully');
+    } catch (error) {
+      console.error('Error updating order:', error);
+      alert('Gagal update urutan');
+    }
+  }
+
+  window.bukaEdit = async (id, col) => {
+    currentEditId = id;
+    currentEditCol = col;
+    const snap = await getDocs(collection(db, col));
+    const data = snap.docs.find(d => d.id === id).data();
+
+    if(col === 'designs') {
+      document.getElementById('designTitle').value = data.title;
+      document.getElementById('designCategory').value = data.category;
+      document.getElementById('designDescription').value = data.description || '';
+      document.getElementById('designClient').value = data.client || '';
+      document.getElementById('designYear').value = data.year || '2025';
+      document.getElementById('designTools').value = data.tools || '';
+      document.getElementById('designTags').value = data.tags || '';
+      if(data.coverUrl) {
+        document.getElementById('designCoverPreview').innerHTML = 
+            `<img src="${data.coverUrl}" 
+              style="width:100px; 
+              height:100px; 
+              object-fit:cover; 
+              border-radius:10px; 
+              border: 2px solid #667eea;">`;
+    }
+      updatePreview(data.images || [data.imageUrl], 'designPreviewContainer');
+      window.openModal('designModal');
+    } else if(col === 'photos') {
+      document.getElementById('photoTitle').value = data.title;
+      document.getElementById('photoDescription').value = data.description || '';
+      document.getElementById('photoCategory').value = data.category;
+      document.getElementById('photoLocation').value = data.location || '';
+      document.getElementById('photoClient').value = data.client || '';
+      document.getElementById('photoTags').value = data.tags || '';
+      document.getElementById('photoYear').value = data.year || '2025';
+      document.getElementById('photoLayout').value = data.layout || 'portrait';
+      if(data.coverUrl) {
+        document.getElementById('photoCoverPreview').innerHTML = 
+            `<img src="${data.coverUrl}" 
+                style="width:100px; 
+                height:100px; 
+                object-fit:cover; 
+                border-radius:10px; 
+                border: 2px solid #667eea;">`;
+    }
+      updatePreview(data.images || [data.imageUrl], 'photoPreviewContainer');
+      window.openModal('photoModal');
+    } else if(col === 'videos') {
+      document.getElementById('videoTitle').value = data.title;
+      document.getElementById('videoCategory').value = data.category;
+      document.getElementById('videoUrl').value = `https://www.youtube.com/watch?v=${data.youtubeId}`;
+      document.getElementById('videoYear').value = data.year || '2025';
+      document.getElementById('videoClient').value = data.client || '';
+      document.getElementById('videoDuration').value = data.duration || '';
+      document.getElementById('videoTags').value = data.tags || '';
+      document.getElementById('videoOrientation').value = data.orientation || 'landscape';
+      window.openModal('videoModal');
+    }
+  };
+
+let itemToDelete = null;
+
+// Fungsi buat buka modal hapus custom
+window.hapusItem = (id, col) => {
+    itemToDelete = { id, col };
+    const modal = document.getElementById('deleteModal');
+    modal.classList.add('active');
+};
+
+// Fungsi buat nutup modal
+window.closeDeleteModal = () => {
+    document.getElementById('deleteModal').classList.remove('active');
+    itemToDelete = null;
+};
+
+// Eksekusi hapus pas tombol merah di klik
+document.getElementById('confirmDeleteBtn').onclick = async () => {
+    if (itemToDelete) {
+        const { id, col } = itemToDelete;
+        const btn = document.getElementById('confirmDeleteBtn');
+        btn.disabled = true;
+        btn.innerText = "Processing...";
+        
+        try {
+            await deleteDoc(doc(db, col, id));
+            closeDeleteModal();
+            loadAdminData(); // Refresh list otomatis
+        } catch (err) {
+            alert("Gagal hapus: " + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerText = "Hapus!";
+        }
+    }
+};
+
+  async function prosesSubmit(e, col, fileId) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.disabled = true; btn.innerText = "Processing...";
+
+    try {
+      const pData = {
+        title: e.target.querySelector('[id*="Title"]').value,
+        category: e.target.querySelector('[id*="Category"]').value,
+        year: e.target.querySelector('[id*="Year"]').value,
+        timestamp: new Date().toISOString(),
+        order: 0
+      };
+
+      if(col === 'videos') {
+        const url = document.getElementById('videoUrl').value;
+        pData.youtubeId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
+        pData.client = document.getElementById('videoClient').value;
+        pData.duration = document.getElementById('videoDuration').value;
+        pData.tags = document.getElementById('videoTags').value;
+        pData.orientation = document.getElementById('videoOrientation').value;
+      } else {
+        const files = document.getElementById(fileId).files;
+        if(files.length > 0) {
+          let urls = [];
+          for (let f of files) {
+            try {
+            const fd = new FormData();
+            fd.append('file', f); fd.append('upload_preset', UPLOAD_PRESET);
+            console.log("Sedang mengirim: " + f.name);
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {method:'POST', body:fd});
+            const d = await res.json();
+            if(d.secure_url) {
+                urls.push(d.secure_url);
+            }
+            } catch (err) {
+                console.error("Gagal upload satu file, skip...", err);
+            }
+          }
+          pData.images = urls;
+        }
+        if(col === 'designs') {
+           const coverFile = document.getElementById('designCoverFile').files[0];
+           if(coverFile) {
+               const fdCover = new FormData();
+               fdCover.append('file', coverFile);
+               fdCover.append('upload_preset', UPLOAD_PRESET);
+               const resCover = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {method:'POST', body:fdCover});
+               const dCover = await resCover.json();
+               pData.coverUrl = dCover.secure_url || "";
+           }
+
+          pData.description = document.getElementById('designDescription').value;
+          pData.client = document.getElementById('designClient').value;
+          pData.tools = document.getElementById('designTools').value;
+          pData.tags = document.getElementById('designTags').value;
+        }
+        
+        if(col === 'photos') {
+            const coverFile = document.getElementById('photoCoverFile').files[0];
+            if(coverFile) {
+                const fdCover = new FormData();
+                fdCover.append('file', coverFile);
+                fdCover.append('upload_preset', UPLOAD_PRESET);
+                const resCover = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {method:'POST', body:fdCover});
+                const dCover = await resCover.json();
+                pData.coverUrl = dCover.secure_url || ""; // Simpen URL cover
+    }
+    
+          pData.location = document.getElementById('photoLocation').value;
+          pData.description = document.getElementById('photoDescription').value;
+          pData.client = document.getElementById('photoClient').value;
+          pData.tags = document.getElementById('photoTags').value;
+          pData.layout = document.getElementById('photoLayout').value || 'portrait';
+        }
+      }
+
+     if (currentEditId) {
+          await updateDoc(doc(db, col, currentEditId), pData);
+          window.showSuccess("Ciee Postingan Baru", "Baru posting sekarang Bos? Kirain masih sibuk nginget masa lalu.");
+      } else {
+          await addDoc(collection(db, col), pData);
+          window.showSuccess("Ciee Postingan Baru", "Baru posting sekarang Bos? Kirain masih sibuk nginget masa lalu.");
+      }
+      
+    } catch (err) { 
+      alert("Waduh Error: " + err.message); 
+      btn.disabled = false; 
+      btn.innerText = "Save Project"; 
+    }
+  }
+
+  document.getElementById('designForm')?.addEventListener('submit', (e) => prosesSubmit(e, 'designs', 'designFile'));
+  document.getElementById('photoForm')?.addEventListener('submit', (e) => prosesSubmit(e, 'photos', 'photoFile'));
+  document.getElementById('videoForm')?.addEventListener('submit', (e) => prosesSubmit(e, 'videos', ''));
+
+  onAuthStateChanged(auth, (user) => {
+    document.getElementById('loginPage').style.display = user ? 'none' : 'flex';
+    document.getElementById('dashboard').classList.toggle('active', !!user);
+    if(user) { loadAdminData(); window.showSection('overview'); }
+  });
+
+  const loginF = document.getElementById('loginForm');
+  if(loginF) {
+    loginF.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById('username').value, document.getElementById('password').value);
+      } catch (e) { alert("Login Gagal!"); }
+    });
+  }
+
+  window.logout = () => signOut(auth);
+  window.openModal = (id) => document.getElementById(id).classList.add('active');
+  window.closeModal = (id) => { 
+    document.getElementById(id).classList.remove('active'); currentEditId = null;
+    if (id === 'designModal') {
+        document.getElementById('designCoverPreview').innerHTML = '';
+        document.getElementById('designPreviewContainer').innerHTML = '';
+    }
+
+    if (id === 'photoModal') {
+        document.getElementById('photoCoverPreview').innerHTML = '';
+        document.getElementById('photoPreviewContainer').innerHTML = '';
+    }
+    };
+
+  function updatePreview(imgs, containerId) {
+    const cont = document.getElementById(containerId);
+    if(!cont) return; cont.innerHTML = '';
+    if(imgs && imgs[0]) imgs.forEach(url => {
+      const i = document.createElement('img'); 
+      i.src = url; 
+      i.style.cssText = "width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid #333;";
+      i.loading = "lazy";
+      cont.appendChild(i);
+    });
+  }
+
+  ['designFile', 'photoFile'].forEach(id => {
+    document.getElementById(id)?.addEventListener('change', (e) => {
+      updatePreview(Array.from(e.target.files).map(f => URL.createObjectURL(f)), id === 'designFile' ? 'designPreviewContainer' : 'photoPreviewContainer');
+    });
+  });
+
+document.getElementById('designCoverFile')?.addEventListener('change', (e) => {
+    const file = e.target.files[0]; 
+    if(file){
+        const url = URL.createObjectURL(file);
+        document.getElementById('designCoverPreview').innerHTML = 
+            `<img src="${url}" style="width:100px; height:100px; object-fit:cover; border-radius:10px; border: 2px solid #667eea;">`;
+    }
+});
+
+document.getElementById('photoCoverFile')?.addEventListener('change', (e) => {
+    const file = e.target.files[0]; 
+    if(file){
+        const url = URL.createObjectURL(file);
+        document.getElementById('photoCoverPreview').innerHTML = 
+            `<img src="${url}" style="width:100px; height:100px; object-fit:cover; border-radius:10px; border: 2px solid #667eea;">`;
+    }
+});
+
+window.saveProfile = async () => {
+    try {
+        const data = {
+            name: document.getElementById('profileName').value,
+            tagline: document.getElementById('profileTagline').value,
+            bio: document.getElementById('profileBio').value
+        };
+        await setDoc(doc(db, "settings", "profile"), data, { merge: true });
+        window.showSuccess("Profil Update!", "Info profil lo udah aman di database, Bos!");
+    } catch (err) { alert("Gagal save profil: " + err.message); }
+};
+
+// 2. Save Social Links
+window.saveSocial = async () => {
+    try {
+        const data = {
+            instagram: document.getElementById('socialInstagram').value,
+            behance: document.getElementById('socialBehance').value,
+            linkedin: document.getElementById('socialLinkedin').value,
+            whatsapp: document.getElementById('socialWhatsapp').value
+        };
+        await setDoc(doc(db, "settings", "socials"), data, { merge: true });
+        window.showSuccess("Sosmed Aman!", "Link sosmed lo udah berhasil diupdate!");
+    } catch (err) { alert("Gagal save sosmed: " + err.message); }
+};
+
+// 3. Save Contact Email
+window.saveContact = async () => {
+    try {
+        const email = document.getElementById('contactEmail').value;
+        await setDoc(doc(db, "settings", "contact"), { email }, { merge: true });
+        window.showSuccess("Email Tersimpan!", "Sekarang orang bisa kontak lo ke email baru!");
+    } catch (err) { alert("Gagal save email: " + err.message); }
+};
+
+// 4. Ganti Password Login
+window.changePassword = async () => {
+    const newPass = document.getElementById('newPassword').value;
+    const confirmPass = document.getElementById('confirmPassword').value;
+
+    if (newPass !== confirmPass) return alert("Password baru gak cocok, Bos!");
+    if (newPass.length < 6) return alert("Minimal 6 karakter biar aman!");
+
+    try {
+        const user = auth.currentUser;
+        await updatePassword(user, newPass);
+        window.showSuccess("Password Diganti!", "Inget-inget password barunya ya!");
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+    } catch (err) { alert("Gagal ganti password (Mungkin butuh relogin): " + err.message); }
+};
+
+// 5. Export Data (Download JSON Backup)
+window.exportData = async () => {
+    try {
+        const collections = ['designs', 'photos', 'videos', 'settings'];
+        let allData = {};
+
+        for (const colName of collections) {
+            const snap = await getDocs(collection(db, colName));
+            allData[colName] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        }
+
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "portfolio_backup.json");
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    } catch (err) { alert("Gagal export: " + err.message); }
+};
+
+</script>
+</body>
+</html>

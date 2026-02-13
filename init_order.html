@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Initialize Order Field</title>
+</head>
+<body>
+    <h1>Initialize Order Field - One Time Setup</h1>
+    <p>Klik button di bawah untuk set field "order" ke semua posts yang udah ada.</p>
+    <button onclick="initializeOrder()" style="padding:15px 30px; background:#667eea; color:white; border:none; border-radius:8px; cursor:pointer; font-size:16px;">
+        Initialize Order Field
+    </button>
+    <div id="status" style="margin-top:20px; padding:15px; background:#1a1a1a; border-radius:8px; color:#fff;"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, writeBatch, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsi8-2A9thmiz_Uymt7bBZWaaErPy5_Cw",
+            authDomain: "farhanul-studio.firebaseapp.com",
+            projectId: "farhanul-studio",
+            storageBucket: "farhanul-studio.firebasestorage.app",
+            messagingSenderId: "720414517447",
+            appId: "1:720414517447:web:698d6f69316e18992476e2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.initializeOrder = async function() {
+            const status = document.getElementById('status');
+            status.innerHTML = '<p>Processing...</p>';
+
+            try {
+                // Process designs
+                const designSnap = await getDocs(collection(db, 'designs'));
+                const designBatch = writeBatch(db);
+                designSnap.docs.forEach((docSnap, index) => {
+                    designBatch.update(doc(db, 'designs', docSnap.id), { order: index });
+                });
+                await designBatch.commit();
+                status.innerHTML += '<p>✅ Designs: ' + designSnap.size + ' items updated</p>';
+
+                // Process photos
+                const photoSnap = await getDocs(collection(db, 'photos'));
+                const photoBatch = writeBatch(db);
+                photoSnap.docs.forEach((docSnap, index) => {
+                    photoBatch.update(doc(db, 'photos', docSnap.id), { order: index });
+                });
+                await photoBatch.commit();
+                status.innerHTML += '<p>✅ Photos: ' + photoSnap.size + ' items updated</p>';
+
+                // Process videos
+                const videoSnap = await getDocs(collection(db, 'videos'));
+                const videoBatch = writeBatch(db);
+                videoSnap.docs.forEach((docSnap, index) => {
+                    videoBatch.update(doc(db, 'videos', docSnap.id), { order: index });
+                });
+                await videoBatch.commit();
+                status.innerHTML += '<p>✅ Videos: ' + videoSnap.size + ' items updated</p>';
+
+                status.innerHTML += '<p style="color:#4ade80; font-weight:bold; margin-top:20px;">🎉 DONE! Semua posts udah punya field "order"</p>';
+            } catch (error) {
+                status.innerHTML += '<p style="color:red;">❌ Error: ' + error.message + '</p>';
+            }
+        };
+    </script>
+</body>
+</html>

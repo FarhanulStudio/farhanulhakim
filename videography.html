@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videography</title>
+    <link rel="icon" type="image/png" href="assets/images/Logo.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-y: scroll;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #161616;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px; 
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            border-radius: 20px;
+            border: 2px solid #0a0a0a; 
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); 
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            background: rgba(22, 22, 22, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #667eea;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Header Section */
+        .header-section {
+            padding: 150px 60px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .header-section h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: -5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto -50px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            padding: 0 60px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding:8px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.90rem;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Portfolio Grid */
+        .portfolio-section {
+            padding: 0 60px 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .portfolio-grid {
+            display: block;
+            width: 100%;
+            column-gap: 20px;
+        }
+
+        .grid-sizer { 
+            width: 33.333%; 
+        }
+
+        @media (max-width: 1200px) {
+            .grid-sizer, 
+            .portfolio-item { 
+                width: 50%; 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-sizer, 
+            .portfolio-item { 
+                width: 100%;
+             }
+        }
+
+        .portfolio-item {
+            position: relative;
+            display: inline-block;
+            width: 33.333%;
+            margin-bottom: 0px;
+            break-inside: avoid;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 10px;
+            box-shadow: 0.4s ease;
+        }
+
+        .portfolio-item.landscape {
+            aspect-ratio: 3 / 2;
+        }
+
+        .portfolio-item.portrait {
+            aspect-ratio: 9 / 16;
+        }
+
+        .portfolio-item:hover {
+            z-index: 2;
+        }
+
+        .portfolio-item-inner {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            height: 100%;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .portfolio-item:hover .portfolio-item-inner {
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4); 
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            object-position: center;
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-item:hover .video-thumbnail {
+            transform: scale(1.05); 
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: rgba(102, 126, 234, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .play-icon i {
+            font-size: 1rem;
+            color: #fff;
+            margin-left: 5px;
+        }
+
+        .portfolio-item:hover .play-icon {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(102, 126, 234, 1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0px;
+            line-height: 1.2;
+        }
+
+        .portfolio-category {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            gap: 10px;
+            margin-top: -10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #8b9eea;
+            font-weight: 500;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 200;
+            padding: 80px 40px 40px 40px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            max-width: 1200px;
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 80px 60px 60px 60px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border-radius: 50%;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 40px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .info-item h4 {
+            color: #667eea;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-item p {
+            color: #aaa;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+            display: none;
+        }
+
+        .empty-state.show {
+            display: block;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .empty-state p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* mobile */
+    @media (max-width: 768px) {
+        .navbar { padding: 15px 20px; }
+        .nav-links { display: none; }
+
+        .header-section {
+            padding: 100px 20px 30px !important;
+        }
+        .header-section h1 {
+            font-size: 2.5rem !important;
+            margin-bottom: -5px !important;
+        }
+        .header-section p {
+            font-size: 1rem !important;
+            margin-bottom: -20px !important;
+        }
+
+        .filter-buttons {
+            justify-content: flex-start !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto;
+            padding: 10px 0;
+            gap: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; 
+        }
+        .filter-buttons::-webkit-scrollbar { 
+            display: none; 
+        }
+
+        .filter-btn {
+            white-space: nowrap;
+            padding: 8px 18px !important;
+            font-size: 0.85rem !important;
+        }
+
+        .portfolio-section {
+            padding: 0 15px 60px !important;
+        }
+        
+        .portfolio-grid {
+            display: block; 
+            width: 100%;
+        }
+
+        .grid-sizer, .portfolio-item { 
+            width: 100% !important; 
+        }
+
+        .portfolio-item {
+            padding: 0 0 20px 0 !important; 
+            height: auto !important; 
+            margin-bottom: 0 !important;
+        }
+
+        .portfolio-item-inner {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
+        }
+
+        /* Text Overlay */
+        .portfolio-overlay { 
+            padding: 20px; 
+        }
+
+        .portfolio-title { 
+            font-size: 1.2rem !important; 
+            margin-bottom: 5px !important; 
+        }
+
+        .portfolio-category { 
+            font-size: 0.8rem !important; 
+            margin-bottom: 10px !important; 
+        }
+
+        .tag { 
+            padding: 4px 10px !important; 
+            font-size: 0.7rem !important; 
+        }
+
+        .modal {
+            padding: 10px !important; 
+            align-items: center !important;
+        }
+
+        .modal-content {
+            padding: 30px 20px !important;
+            margin: 0 !important; 
+            width: 100% !important;
+            border-radius: 15px !important;
+            max-height: 60vh;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem !important; 
+            margin-bottom: 20px !important; 
+            text-align: left; 
+        }
+
+        .close-modal { 
+            top: 10px; 
+            right: 10px; 
+            width: 35px; 
+            height: 35px; 
+            background: rgba(0,0,0,0.8); 
+        }
+        
+        .video-container {
+            margin-bottom: 20px !important;
+            border-radius: 5px !important;
+        }
+
+        .modal-info {
+            gap: 5px !important;
+            padding-top: 20px !important;
+            grid-template-columns: 1fr 1fr !important; 
+        }
+        
+        .info-item h4 {
+            font-size: 1.1rem !important; 
+            color: #667eea !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .info-item p {
+            font-size: 0.9rem !important;
+            color: #ddd !important;
+            font-weight: 400;
+        }
+    }
+
+        html {
+            scrollbar-gutter: stable;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 30px 40px;
+            background: #0f0f0f;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">Farhanul Hakim</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="design.html">Design</a>
+                <a href="videography.html" class="active">Videography</a>
+                <a href="photography.html">Photography</a>
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="header-section">
+        <h1>VIDEOGRAPHY</h1>
+        <p>A selection of Video works from various project types.</p>
+    </section>
+
+    <!-- Filter -->
+    <section class="filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="All">All</button>
+            <button class="filter-btn" data-filter="Event">Event</button>
+            <button class="filter-btn" data-filter="Wedding">Wedding</button>
+            <button class="filter-btn" data-filter="Content">Content</button>
+            <button class="filter-btn" data-filter="Various">Various</button>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-section">
+        <div id="loadingState" style="text-align: center; padding: 60px 20px; color: #888;">
+            <p>Sabar euy Loading...</p>
+        </div>
+        <div class="portfolio-grid" id="portfolioGrid"></div>
+            <div class="grid-sizer"></div> </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <i class="fas fa-folder-open"></i>
+            <p>Kosong Bos kek Hati</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Farhanul Studio</p>
+    </footer>
+
+    <!-- Modal Video -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <h2 class="modal-title" id="modalTitle">Music Festival 2024</h2>
+            
+            <!-- YouTube Video Embed -->
+            <div class="video-container" id="videoContainer">
+                <iframe id="youtubeVideo" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+            <div class="modal-info">
+                <div class="info-item">
+                    <h4>Client</h4>
+                    <p id="modalClient">Event Organizer</p>
+                </div>
+                <div class="info-item">
+                    <h4>Year</h4>
+                    <p id="modalYear">2024</p>
+                </div>
+                <div class="info-item">
+                    <h4>Category</h4>
+                    <p id="modalCat">Event</p>
+                </div>
+                <div class="info-item">
+                    <h4>Duration</h4>
+                    <p id="modalDuration">3:45</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCsi8-2A9thmiz_Uymt7bBZWaaErPy5_Cw",
+    authDomain: "farhanul-studio.firebaseapp.com",
+    projectId: "farhanul-studio",
+    storageBucket: "farhanul-studio.firebasestorage.app",
+    messagingSenderId: "720414517447",
+    appId: "1:720414517447:web:698d6f69316e18992476e2",
+    measurementId: "G-6BQWY0X13F"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+const auth = getAuth(app);
+let msnry;
+
+async function loadVideos() {
+    const grid = document.getElementById('portfolioGrid');
+    const loading = document.getElementById('loadingState');
+    
+    try {
+        const q = query(collection(db, "videos"), orderBy("timestamp", "desc"));
+        const snapshot = await getDocs(q);
+        
+        if (loading) loading.style.display = 'none';
+        grid.innerHTML = '<div class="grid-sizer"></div>'; 
+
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const card = document.createElement('div');
+
+            const orientation = data.orientation || 'landscape';
+            
+            card.className = `portfolio-item ${orientation}`;
+            card.setAttribute('data-category', data.category ? data.category.toLowerCase() : 'various');
+
+            const thumbUrl = `https://img.youtube.com/vi/${data.youtubeId}/maxresdefault.jpg`;
+
+            // Buat tags HTML (client + custom tags)
+            let tagsHTML = '';
+                    if(data.tags) { 
+                       const customTags = data.tags.split(',').map(t => t.trim());
+                       customTags.forEach(t => {
+                       if(t) tagsHTML += `<span class="tag">${t}</span>`;
+                    });
+                    }
+
+            card.innerHTML = `
+                <div class="portfolio-item-inner">
+                    <img src="${thumbUrl}" class="video-thumbnail" alt="${data.title}">
+                    <div class="play-icon"><i class="fas fa-play"></i></div>
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">${data.title}</h3>
+                        <p class="portfolio-category">${data.category}</p> <div class="portfolio-tags">
+                            ${tagsHTML}
+                        </div>
+                    </div>
+                </div>
+                `;
+
+            card.onclick = () => {
+                document.getElementById('modalTitle').textContent = data.title;
+                document.getElementById('modalClient').textContent = data.client || '-';
+                document.getElementById('modalYear').textContent = data.year || '2025';
+                document.getElementById('modalCat').textContent = data.category;
+                document.getElementById('modalDuration').textContent = data.duration || '-';
+                
+                const embedUrl = `https://www.youtube.com/embed/${data.youtubeId}?autoplay=1&rel=0`;
+                document.getElementById('youtubeVideo').src = embedUrl;
+                
+                document.getElementById('modal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            grid.appendChild(card);
+        });
+
+        msnry = new Masonry( grid, { 
+        itemSelector: '.portfolio-item',
+        columnWidth: '.grid-sizer',
+        percentPosition: true
+    });
+
+    imagesLoaded( grid ).on( 'progress', function() {
+        msnry.layout();
+    });
+
+        setupFilter(); 
+
+    } catch (error) {
+        console.error("Error load video:", error);
+        grid.innerHTML = '<p style="grid-column: 1/-1;text-align: center; color: red;">Failed to load videos</p>';
+    }
+}
+
+function setupFilter() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const emptyState = document.getElementById('emptyState');
+
+    filterBtns.forEach(btn => {
+        btn.onclick = function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const filter = this.getAttribute('data-filter').toLowerCase();
+            const items = document.querySelectorAll('.portfolio-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const category = item.getAttribute('data-category');
+                const itemCat = category ? category.toLowerCase() : '';
+                if (filter === 'all' || category === filter) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if(msnry) msnry.layout();
+
+            if (visibleCount === 0) emptyState.classList.add('show');
+            else emptyState.classList.remove('show');
+        };
+    });
+}
+
+window.closeModal = () => {
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+    document.getElementById('youtubeVideo').src = '';
+};
+
+loadVideos();
+
+document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+    </script>
+</body>
+</html>

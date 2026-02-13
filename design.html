@@ -507,16 +507,18 @@
     }
 
     .modal-content {
-        padding: 30px 20px !important;
+        padding: 30px 20px 50px 20px !important;
         margin: 0 !important; 
         width: 100% !important;
         border-radius: 15px !important;
         max-height: 60vh;
+        overflow-y: auto !important; 
+        display: block !important;
     }
 
     .modal-title {
         font-size: 1.5rem !important; 
-        margin-bottom: 10px !important; 
+        margin-bottom: 5px !important; 
         text-align: left; 
         }
 
@@ -531,6 +533,7 @@
         color: #667eea;
         font-size: 1.2rem;
         margin-bottom: 5px;
+        display: block;
     }
 
     .modal-description {
@@ -539,6 +542,9 @@
         line-height: 1.5;
         margin-bottom: 40px;
         white-space: pre-line;
+        margin-top: 15px !important; 
+        border-top: 1px solid rgba(255,255,255,0.1); 
+        grid-template-columns: 1fr 1fr !important;
     }
 
     .modal-images-container img {
@@ -551,6 +557,8 @@
     .modal-info {
         gap: 5px !important;
         padding-top: 20px !important;
+        margin-top: 30px !important; 
+        border-top: 1px solid rgba(255,255,255,0.1);
         grid-template-columns: 1fr 1fr !important; 
     }
         

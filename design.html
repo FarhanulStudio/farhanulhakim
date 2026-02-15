@@ -198,7 +198,7 @@
             break-inside: avoid;
             border-radius: 10px;
             cursor: pointer;
-            padding: 10px;
+            padding: 15px;
             box-shadow: 0.4s ease;
         }
 
@@ -263,20 +263,20 @@
         }
 
         .portfolio-tags {
-        display: flex;
-        gap: 8px;
-        margin-top: -10px;
-        flex-wrap: wrap;
+            display: flex;
+            gap: 8px;
+            margin-top: -10px;
+            flex-wrap: wrap;
         }
 
         .tag {
-        background: rgba(102, 126, 234, 0.15); 
-        color: #667eea;
-        padding: 4px 14px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        border: 1px solid rgba(102, 126, 234, 0.2);
+            background: rgba(102, 126, 234, 0.15); 
+            color: #667eea;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
         /* Modal */
@@ -426,22 +426,22 @@
     }
 
     .header-section {
-        padding: 100px 20px 30px !important;
+        padding: 100px 20px 30px;
     }
 
     .header-section h1 {
-        font-size: 2.5rem !important;
-        margin-bottom: -5px !important;
+        font-size: 2.5rem;
+        margin-bottom: -5px;
     }
 
     .header-section p {
-        font-size: 1rem !important;
-        margin-bottom: -20px !important;
+        font-size: 1rem;
+        margin-bottom: -20px;
     }
 
     .filter-buttons {
-        justify-content: flex-start !important;
-        flex-wrap: nowrap !important;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
         overflow-x: auto;
         padding: 10px 0;
         gap: 10px;
@@ -465,7 +465,7 @@
 
     .portfolio-grid {
         display: block;
-        gap: 12px !important;
+        gap: 12px;
     }
 
     .portfolio-item {
@@ -480,15 +480,29 @@
     }
 
     .portfolio-item.portrait {
-        height: 320px !important;
+        height: 320px;
     }
 
     .portfolio-overlay {
         padding: 15px;
     }
 
+    .portfolio-item.mobile-active .portfolio-item-inner {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        z-index: 2;
+    }
+
+    .portfolio-item.mobile-active .portfolio-image {
+        transform: scale(1.05);
+    }
+
+    .portfolio-item.mobile-active .portfolio-overlay {
+        opacity: 1; 
+    }
+
     .portfolio-title {
-        font-size: 1.2rem !important;
+        font-size: 1.2rem;
     }
 
     .portfolio-category {
@@ -497,12 +511,12 @@
     }
 
     .tag {
-        padding: 3px 10px !important;
-        font-size: 0.65rem !important;
+        padding: 3px 10px;
+        font-size: 0.65rem;
     }
 
     .modal {
-        padding: 30px !important; 
+        padding: 30px;
         background: rgba(0, 0, 0, 0.9);
     }
 
@@ -526,8 +540,8 @@
     }
 
     .modal-title {
-        font-size: 1.5rem !important; 
-        margin-bottom: -1px !important; 
+        font-size: 1.5rem;
+        margin-bottom: -1px;
         text-align: left; 
         }
 
@@ -750,8 +764,20 @@
                         </div>
                     `;
 
-                    // Klik untuk buka modal dengan semua foto
-                    card.onclick = () => {
+                    card.onclick = (e) => {
+                        if (window.innerWidth <= 768) {
+                            if (!card.classList.contains('mobile-active')) {
+                                document.querySelectorAll('.portfolio-item').forEach(item => {
+                                    item.classList.remove('mobile-active');
+                                });
+
+                                card.classList.add('mobile-active');
+
+                                return; 
+                            }
+                        }
+
+                        // === KODINGAN BUKA MODAL (Jalan pas klik ke-2 di HP, atau klik biasa di Desktop) ===
                         document.getElementById('mTitle').textContent = data.title;
                         document.getElementById('mCategory').textContent = data.category.toUpperCase();
                         document.getElementById('mDesc').textContent = data.description || '-';
@@ -852,6 +878,14 @@
         });
 
         loadDesigns();
+
+        document.addEventListener('click', function(e) {
+        if (!e.target.closest('.portfolio-item')) {
+            document.querySelectorAll('.portfolio-item').forEach(item => {
+                item.classList.remove('mobile-active');
+            });
+        }
+    });
         
     </script>
 </body>

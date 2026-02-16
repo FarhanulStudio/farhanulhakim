@@ -295,11 +295,14 @@
             color: #888;
         }
 
+        /* === CSS PORTFOLIO LENGKAP (GANTI BAGIAN INI BOS) === */
+
         .categories-grid {
             max-width: 1400px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex; /* Biar ke tengah */
+            justify-content: center;
+            flex-wrap: wrap;
             gap: 40px;
         }
 
@@ -312,6 +315,9 @@
             transition: transform 0.4s ease;
             text-decoration: none;
             display: block;
+            width: 100%;
+            max-width: 400px;
+            flex: 1 1 350px;
         }
 
         .category-card:hover {
@@ -332,11 +338,12 @@
             z-index: 1;
         }
 
+        /* === INI YANG TADI ILANG (GAMBAR BACKGROUNDNYA) === */
         .design-card {
             background-image: url('assets/images/portfolio/design-cover.png');
             background-size: cover;
             background-position: center;
-            background-color: #1a1a2e;
+            background-color: #1a1a2e; /* Warna cadangan kalau gambar gagal load */
         }
 
         .photo-card {
@@ -353,6 +360,7 @@
             background-color: #1a1a2e;
         }
 
+        /* === ISI TEKS DI DALEM KARTU === */
         .category-content {
             position: absolute;
             bottom: 0;
@@ -396,7 +404,7 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            justify-content: center;
             gap: 40px;
             margin-top: 20px;
         }
@@ -840,24 +848,6 @@
                     <p class="category-count">10+ Projects</p>
                 </div>
             </a>
-
-            <a href="videography.html" class="category-card video-card">
-                <div class="category-content">
-                    <span class="category-icon">🎬</span>
-                    <h3 class="category-title">Videography</h3>
-                    <p class="category-desc">Telling stories through meaningful moving visuals.</p>
-                    <p class="category-count">15+ Videos</p>
-                </div>
-            </a>
-
-            <a href="photography.html" class="category-card photo-card">
-                <div class="category-content">
-                    <span class="category-icon">📸</span>
-                    <h3 class="category-title">Photography</h3>
-                    <p class="category-desc">Capturing moments with a meaningful visual approach.</p>
-                    <p class="category-count">25+ Photos</p>
-                </div>
-            </a>
         </div>
     </section>
 
@@ -878,32 +868,6 @@
                     <li>Banner Design</li>
                     <li>Flyer Design</li>
                     <li>Etc.</li>
-                </ul>
-            </div>
-
-            <div class="service-card">
-                <span class="service-icon">🎬</span>
-                <h3>Videography</h3>
-                <p>Bringing stories to life from planning to final release.</p>
-                <ul class="service-list">
-                    <li>Event</li>
-                    <li>Video Editing</li>
-                    <li>Content Creation</li>
-                    <li>Documentary</li>
-                    <li>Yearbook</li>
-                </ul>
-            </div>
-
-            <div class="service-card">
-                <span class="service-icon">📸</span>
-                <h3>Photography</h3>
-                <p>Capturing moments and presenting them to suit your needs.</p>
-                <ul class="service-list">
-                    <li>Event</li>
-                    <li>Graduation</li>
-                    <li>Portrait</li>
-                    <li>Journalism</li>
-                    <li>Sport</li>
                 </ul>
             </div>
         </div>

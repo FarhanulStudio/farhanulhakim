@@ -282,11 +282,13 @@
         }
 
         .tag {
-            padding: 5px 12px;
-            background: rgba(102, 126, 234, 0.2);
-            border-radius: 15px;
-            font-size: 0.8rem;
+            background: rgba(102, 126, 234, 0.15); 
             color: #667eea;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
         /* Placeholder colors for thumbnails */
@@ -522,35 +524,46 @@
         }
 
         .portfolio-title { 
-            font-size: 1.2rem !important; 
+            font-size: 1.2rem;
+            margin-bottom: -3px;
         }
 
         .portfolio-category { 
-            font-size: 0.8rem !important; 
-            margin-bottom: 10px !important; 
+            font-size: 0.9rem;
+            margin-bottom: 15px;
         }
 
-        .tag { 
-            padding: 4px 10px !important; 
-            font-size: 0.7rem !important; 
+        .tag {
+            padding: 4px 10px;
+            font-size: 0.7rem;
         }
 
         .modal {
-            padding: 10px !important; 
-            align-items: center !important;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .modal-content {
-            padding: 30px 20px !important;
-            margin: 0 !important; 
-            width: 100% !important;
-            border-radius: 15px !important;
-            max-height: 60vh;
+            padding: 30px 20px 50px 20px;
+            margin: 20px auto;
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            max-height: none;
+            background: #1a1a1a;
+            border-radius: 15px;
+            overflow-y: auto; 
+            display: block;
         }
 
         .modal-title {
-            font-size: 1rem !important; 
-            margin-bottom: 20px !important; 
+            font-size: 1.5rem;
             text-align: left; 
         }
 
@@ -563,25 +576,27 @@
         }
 
         .photo-gallery {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 10px !important;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
 
         .modal-info {
-            gap: 5px !important;
-            padding-top: 20px !important;
-            grid-template-columns: 1fr 1fr !important; 
+            gap: 5px;
+            padding-top: 20px;
+            margin-top: 30px ; 
+            border-top: 1px solid rgba(255,255,255,0.1);
+            grid-template-columns: 1fr 1fr ; 
         }
         
         .info-item h4 {
-            font-size: 0.7rem !important; 
-            color: #667eea !important;
-            margin-bottom: 4px !important;
+            font-size: 1.2rem; 
+            color: #667eea;
+            margin-bottom: 4px;
         }
         
         .info-item p {
-            font-size: 0.5rem !important;
-            color: #ddd !important;
+            font-size: 0.9rem;
+            color: #ddd;
             font-weight: 400;
         }
     }
@@ -749,8 +764,7 @@
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 const card = document.createElement('div');
-                
-                // Pake layout portrait/landscape biar tingginya beda-beda ala Pinterest
+
                 card.className = `portfolio-item ${data.layout || 'portrait'}`;
                 card.setAttribute('data-category', data.category);
                 
@@ -773,7 +787,22 @@
                     </div>
                 `;
 
-                card.onclick = () => openDynamicGallery(data);
+                card.onclick = (e) => {
+                        if (window.innerWidth <= 768) {
+                            if (!card.classList.contains('mobile-active')) {
+                                document.querySelectorAll('.portfolio-item').forEach(item => {
+                                    item.classList.remove('mobile-active');
+                                });
+
+                                card.classList.add('mobile-active');
+
+                                return; 
+                            }
+                        }
+
+                        openDynamicGallery(data);
+            };
+
                 grid.appendChild(card);
             });
 

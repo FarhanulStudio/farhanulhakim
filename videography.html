@@ -313,19 +313,19 @@
 
         .portfolio-tags {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-top: -10px;
             flex-wrap: wrap;
         }
 
         .tag {
-            padding: 6px 14px;
-            background: rgba(102, 126, 234, 0.2);
-            border: 1px solid rgba(102, 126, 234, 0.4);
+            background: rgba(102, 126, 234, 0.15); 
+            color: #667eea;
+            padding: 4px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            color: #8b9eea;
+            font-size: 0.75rem;
             font-weight: 500;
+            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
         /* Modal */
@@ -510,12 +510,13 @@
 
         .portfolio-title { 
             font-size: 1.2rem;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
+
         }
 
         .portfolio-category { 
-            font-size: 0.8rem;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
         }
 
         .tag { 
@@ -524,16 +525,26 @@
         }
 
         .modal {
-            padding: 10px;
-            align-items: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .modal-content {
-            padding: 30px 20px;
-            margin: 0;
+            padding: 30px 20px 50px 20px;
+            margin: 20px auto;
             width: 100%;
+            height: 100%;
+            max-height: none;
+            background: #1a1a1a;
             border-radius: 15px;
-            max-height: 60vh;
+            overflow-y: auto; 
+            display: block;
         }
         
         .modal-title {
@@ -746,6 +757,19 @@ async function loadVideos() {
                 `;
 
             card.onclick = () => {
+
+            if (window.innerWidth <= 768) {
+                            if (!card.classList.contains('mobile-active')) {
+                                document.querySelectorAll('.portfolio-item').forEach(item => {
+                                    item.classList.remove('mobile-active');
+                                });
+
+                                card.classList.add('mobile-active');
+
+                                return; 
+                            }
+                        }
+
                 document.getElementById('modalTitle').textContent = data.title;
                 document.getElementById('modalClient').textContent = data.client || '-';
                 document.getElementById('modalYear').textContent = data.year || '2025';
@@ -825,6 +849,15 @@ document.getElementById('modal').addEventListener('click', function(e) {
             closeModal();
         }
     });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.portfolio-item')) {
+            document.querySelectorAll('.portfolio-item').forEach(item => {
+                item.classList.remove('mobile-active');
+            });
+        }
+    });
+
     </script>
 </body>
 </html>

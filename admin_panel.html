@@ -1004,7 +1004,6 @@
             <h3>Add Video Project</h3>
             
             <form id="videoForm">
-                <form id="videoForm">
                 <div class="form-group">
                     <label>Thumbnail</label>
                     <div class="upload-area" onclick="document.getElementById('videoCoverFile').click()">
@@ -1016,8 +1015,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Link Google Drive</label>
+                    <input type="text" id="googleDriveUrl" placeholder="Paste Link Google Drive yang 'Anyone with the link' disini...">
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">
+                        Paste full Google Drive url
+                    </p>
+                </div>
+
+                <div class="form-group">
                     <label>YouTube Video URL</label>
-                    <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
+                    <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                     <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">
                         Paste full YouTube URL
                     </p>
@@ -1315,6 +1322,12 @@ window.closeSuccessModal = () => {
         document.getElementById('videoCoverPreview').innerHTML = '';
       }
 
+      if(data.driveId) {
+          document.getElementById('googleDriveUrl').value = `https://drive.google.com/file/d/${data.driveId}/view?usp=sharing`;
+      } else {
+          document.getElementById('googleDriveUrl').value = '';
+      }
+
       window.openModal('videoModal');
     }
   };
@@ -1368,11 +1381,29 @@ document.getElementById('confirmDeleteBtn').onclick = async () => {
 
       if(col === 'videos') {
         const url = document.getElementById('videoUrl').value;
-        pData.youtubeId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
+        const gDrive = document.getElementById('googleDriveUrl').value;
+
+        if (!url && !gDrive) {
+            alert("Woy Bos! Isi minimal salah satu Link (YouTube ATAU Google Drive). Jangan kosong dua-duanya!");
+            btn.disabled = false;
+            btn.innerText = "Save Video Project";
+            return; 
+        }
+
+        if (url) {
+            pData.youtubeId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
+        }
+        
+        if (gDrive) {
+            const driveId = gDrive.split('/d/')[1]?.split('/')[0];
+            if (driveId) pData.driveId = driveId;
+        }
+        
         pData.client = document.getElementById('videoClient').value;
         pData.duration = document.getElementById('videoDuration').value;
         pData.tags = document.getElementById('videoTags').value;
         pData.orientation = document.getElementById('videoOrientation').value;
+
         const coverFile = document.getElementById('videoCoverFile').files[0];
         if(coverFile) {
             const fdCover = new FormData();
@@ -1382,8 +1413,9 @@ document.getElementById('confirmDeleteBtn').onclick = async () => {
             const dCover = await resCover.json();
             pData.coverUrl = dCover.secure_url || ""; 
         }
+      }
 
-      } else {
+       else {
         const files = document.getElementById(fileId).files;
         if(files.length > 0) {
           let urls = [];

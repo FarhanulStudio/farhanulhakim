@@ -775,10 +775,31 @@ async function loadVideos() {
                 document.getElementById('modalCat').textContent = data.category;
                 document.getElementById('modalDuration').textContent = data.duration || '-';
                 
-                const embedUrl = `https://www.youtube.com/embed/${data.youtubeId}?autoplay=1&rel=0`;
-                document.getElementById('youtubeVideo').src = embedUrl;
-                
-                document.getElementById('modal').classList.add('active');
+                const videoContainer = document.getElementById('videoContainer');
+            
+            if (data.driveId) {
+                videoContainer.innerHTML = `
+                    <iframe 
+                        src="https://drive.google.com/file/d/${data.driveId}/preview" 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                        allow="autoplay">
+                    </iframe>
+                `;
+            } 
+
+            else if (data.youtubeId) {
+                videoContainer.innerHTML = `
+                    <iframe id="youtubeVideo" 
+                        src="https://www.youtube.com/embed/${data.youtubeId}?autoplay=1&rel=0" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    </iframe>
+                `;
+            }
+
+            document.getElementById('modal').classList.add('active');
                 document.body.style.overflow = 'hidden';
             };
 

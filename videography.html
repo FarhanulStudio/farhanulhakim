@@ -717,7 +717,7 @@ async function loadVideos() {
     const loading = document.getElementById('loadingState');
     
     try {
-        const q = query(collection(db, "videos"), orderBy("timestamp", "desc"));
+        const q = query(collection(db, "videos"), orderBy("order", "asc"));
         const snapshot = await getDocs(q);
         
         if (loading) loading.style.display = 'none';

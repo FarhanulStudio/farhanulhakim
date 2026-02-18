@@ -220,7 +220,7 @@
         }
 
         .portfolio-item.portrait {
-            aspect-ratio: 9 / 16;
+            aspect-ratio: 2 / 3;
         }
 
         .portfolio-item:hover {
@@ -732,9 +732,8 @@ async function loadVideos() {
             card.className = `portfolio-item ${orientation}`;
             card.setAttribute('data-category', data.category ? data.category.toLowerCase() : 'various');
 
-            const thumbUrl = `https://img.youtube.com/vi/${data.youtubeId}/maxresdefault.jpg`;
+            const thumbUrl = data.coverUrl || `https://img.youtube.com/vi/${data.youtubeId}/maxresdefault.jpg`;
 
-            // Buat tags HTML (client + custom tags)
             let tagsHTML = '';
                     if(data.tags) { 
                        const customTags = data.tags.split(',').map(t => t.trim());

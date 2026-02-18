@@ -933,7 +933,6 @@
         });
     });
 
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -969,16 +968,14 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 const cvBtn = document.getElementById('downloadCvBtn');
-    
-    // Cek dulu tombolnya ada apa nggak (biar gak error)
+
     if (cvBtn) {
         cvBtn.addEventListener('click', () => {
-            // Lapor ke Google Analytics
             logEvent(analytics, 'download_cv', {
                 content_type: 'document',
                 file_name: 'CV_Farhanul_Hakim_2026.pdf'
             });
-            console.log("Tracking Sent: CV Downloaded!"); // Cek di Console browser kalau penasaran
+            console.log("Tracking Sent: CV Downloaded!"); 
         });
     }
 </script>

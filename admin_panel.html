@@ -565,7 +565,7 @@
             <div class="sidebar-menu">
                 <div class="menu-item active" onclick="showSection('overview')">
                     <i class="fas fa-home"></i>
-                    <span>Overview</span>
+                    <span>Dashboard</span>
                 </div>
                 <div class="menu-item" onclick="showSection('design')">
                     <i class="fas fa-palette"></i>
@@ -598,7 +598,7 @@
             <!-- Overview Section -->
             <div class="content-section active" id="overview">
                 <div class="section-header">
-                    <h2>Overview</h2>
+                    <h2>Dashboard</h2>
                     <p>Dashboard management</p>
                 </div>
 
@@ -1004,6 +1004,17 @@
             <h3>Add Video Project</h3>
             
             <form id="videoForm">
+                <form id="videoForm">
+                <div class="form-group">
+                    <label>Thumbnail</label>
+                    <div class="upload-area" onclick="document.getElementById('videoCoverFile').click()">
+                        <i class="fas fa-image"></i>
+                        <p>Klik Upload Cover Video</p>
+                        <div id="videoCoverPreview" style="margin-top: 15px;"></div>
+                        <input type="file" id="videoCoverFile" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>YouTube Video URL</label>
                     <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
@@ -1260,6 +1271,7 @@ window.closeSuccessModal = () => {
               border: 2px solid #667eea;">`;
     }
       updatePreview(data.images || [data.imageUrl], 'designPreviewContainer');
+
       window.openModal('designModal');
     } else if(col === 'photos') {
       document.getElementById('photoTitle').value = data.title;
@@ -1281,6 +1293,7 @@ window.closeSuccessModal = () => {
     }
       updatePreview(data.images || [data.imageUrl], 'photoPreviewContainer');
       window.openModal('photoModal');
+
     } else if(col === 'videos') {
       document.getElementById('videoTitle').value = data.title;
       document.getElementById('videoCategory').value = data.category;
@@ -1290,26 +1303,35 @@ window.closeSuccessModal = () => {
       document.getElementById('videoDuration').value = data.duration || '';
       document.getElementById('videoTags').value = data.tags || '';
       document.getElementById('videoOrientation').value = data.orientation || 'landscape';
+      if(data.coverUrl) {
+        document.getElementById('videoCoverPreview').innerHTML = 
+            `<img src="${data.coverUrl}" 
+              style="width:100px; 
+              height:100px; 
+              object-fit:cover; 
+              border-radius:10px; 
+              border: 2px solid #667eea;">`;
+      } else {
+        document.getElementById('videoCoverPreview').innerHTML = '';
+      }
+
       window.openModal('videoModal');
     }
   };
 
 let itemToDelete = null;
 
-// Fungsi buat buka modal hapus custom
 window.hapusItem = (id, col) => {
     itemToDelete = { id, col };
     const modal = document.getElementById('deleteModal');
     modal.classList.add('active');
 };
 
-// Fungsi buat nutup modal
 window.closeDeleteModal = () => {
     document.getElementById('deleteModal').classList.remove('active');
     itemToDelete = null;
 };
 
-// Eksekusi hapus pas tombol merah di klik
 document.getElementById('confirmDeleteBtn').onclick = async () => {
     if (itemToDelete) {
         const { id, col } = itemToDelete;
@@ -1320,7 +1342,7 @@ document.getElementById('confirmDeleteBtn').onclick = async () => {
         try {
             await deleteDoc(doc(db, col, id));
             closeDeleteModal();
-            loadAdminData(); // Refresh list otomatis
+            loadAdminData(); 
         } catch (err) {
             alert("Gagal hapus: " + err.message);
         } finally {
@@ -1351,6 +1373,16 @@ document.getElementById('confirmDeleteBtn').onclick = async () => {
         pData.duration = document.getElementById('videoDuration').value;
         pData.tags = document.getElementById('videoTags').value;
         pData.orientation = document.getElementById('videoOrientation').value;
+        const coverFile = document.getElementById('videoCoverFile').files[0];
+        if(coverFile) {
+            const fdCover = new FormData();
+            fdCover.append('file', coverFile);
+            fdCover.append('upload_preset', UPLOAD_PRESET);
+            const resCover = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {method:'POST', body:fdCover});
+            const dCover = await resCover.json();
+            pData.coverUrl = dCover.secure_url || ""; 
+        }
+
       } else {
         const files = document.getElementById(fileId).files;
         if(files.length > 0) {
@@ -1371,6 +1403,7 @@ document.getElementById('confirmDeleteBtn').onclick = async () => {
           }
           pData.images = urls;
         }
+        
         if(col === 'designs') {
            const coverFile = document.getElementById('designCoverFile').files[0];
            if(coverFile) {
@@ -1396,7 +1429,7 @@ document.getElementById('confirmDeleteBtn').onclick = async () => {
                 fdCover.append('upload_preset', UPLOAD_PRESET);
                 const resCover = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {method:'POST', body:fdCover});
                 const dCover = await resCover.json();
-                pData.coverUrl = dCover.secure_url || ""; // Simpen URL cover
+                pData.coverUrl = dCover.secure_url || ""; 
     }
     
           pData.location = document.getElementById('photoLocation').value;
@@ -1455,7 +1488,12 @@ document.getElementById('confirmDeleteBtn').onclick = async () => {
         document.getElementById('photoCoverPreview').innerHTML = '';
         document.getElementById('photoPreviewContainer').innerHTML = '';
     }
-    };
+
+    if (id === 'videoModal') {
+        document.getElementById('videoCoverPreview').innerHTML = '';
+        document.getElementById('videoForm').reset();
+    }
+   };
 
   function updatePreview(imgs, containerId) {
     const cont = document.getElementById(containerId);
@@ -1489,6 +1527,15 @@ document.getElementById('photoCoverFile')?.addEventListener('change', (e) => {
     if(file){
         const url = URL.createObjectURL(file);
         document.getElementById('photoCoverPreview').innerHTML = 
+            `<img src="${url}" style="width:100px; height:100px; object-fit:cover; border-radius:10px; border: 2px solid #667eea;">`;
+    }
+});
+
+document.getElementById('videoCoverFile')?.addEventListener('change', (e) => {
+    const file = e.target.files[0]; 
+    if(file){
+        const url = URL.createObjectURL(file);
+        document.getElementById('videoCoverPreview').innerHTML = 
             `<img src="${url}" style="width:100px; height:100px; object-fit:cover; border-radius:10px; border: 2px solid #667eea;">`;
     }
 });

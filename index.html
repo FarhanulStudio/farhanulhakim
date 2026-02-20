@@ -15,7 +15,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('assets/images/background.png');
+            background: url('assets/images/background.png');
             background-position: center;
             background-attachment: fixed;
             color: #ffffff;
@@ -25,6 +25,7 @@
 
         html {
             scroll-behavior: smooth;
+            background-color: #161616;
         }
 
         ::-webkit-scrollbar {
@@ -53,7 +54,7 @@
             transform: translateX(-50%);
             width: calc(100% - 80px);
             max-width: 1300px;
-            padding: 14px 24px;
+            padding: 8px 24px;
             background: rgba(15, 15, 15, 0.5);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(16px);
@@ -76,6 +77,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-decoration: none;
+            margin-left: 15px;
         }
 
         .nav-links {
@@ -96,7 +98,7 @@
         }
 
         .nav-cta {
-            padding: 12px 30px;
+            padding: 10px 25px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 30px;
             color: #fff !important;
@@ -124,7 +126,7 @@
 
         /* Hero Section */
         .hero-section {
-            min-height: 100vh;
+            min-height: 30vh;
             display: flex;
             align-items: center;
             padding: 60px 0 0 0;
@@ -140,7 +142,7 @@
             padding-left: 70px;
             grid-template-columns: 40% 55%;
             align-items: center;
-            min-height: 100vh;
+            min-height: 30vh;
             gap: 50px;
         }
 
@@ -166,34 +168,27 @@
         }
 
         .tagline {
-            font-size: 1.3rem;
+            font-size: 1rem;
             color: #888;
             margin-bottom: 15px;
             font-weight: 400;
-        }
-
-        .hero-description {
-            font-size: 1rem;
-            color: #aaa;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            max-width: 500px;
+            margin-bottom: 60px;
         }
 
         .hero-buttons {
             display: flex;
             gap: 15px;
-            margin-bottom: 35px;
+            margin-bottom: 20px;
         }
 
         .btn-primary, .btn-secondary {
-            padding: 12px 30px;
+            padding: 8px 25px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             display: inline-block;
-            font-size: 0.90rem;
+            font-size: 0.9rem;
         }
 
         .btn-primary {
@@ -288,7 +283,7 @@
 
         .section-header h2 {
             font-size: 3.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 1px;
             color: #fff;
         }
 
@@ -414,7 +409,7 @@
 
         /* Profile Section */
         .profile-section {
-            padding: 60px 60px 40px 60px;
+            padding: 10px 60px 40px 60px;
         }
 
         .profile-grid {
@@ -439,10 +434,10 @@
         }
 
         .profile-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
+            background: rgba(15, 15, 15, 0.5);
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid rgba(102, 126, 234, 0.35);
             border-radius: 16px;
             padding: 28px 26px 24px 26px;
             position: relative;
@@ -765,7 +760,7 @@
         }
 
         .contact-section .section-header h2 {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #764BA2 0%, #667EEA 50%, #5A9AF3 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -784,7 +779,7 @@
             font-size: 2.2rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
         }
 
         .contact-left > p {
@@ -797,10 +792,10 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15, 15, 15, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(102, 126, 234, 0.35);
             border-radius: 14px;
             padding: 20px 24px;
             margin-bottom: 16px;
@@ -845,7 +840,7 @@
             -webkit-backdrop-filter: blur(15px);
             padding: 40px 40px 36px 40px;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(102, 126, 234, 0.35);
         }
 
         .form-group {
@@ -864,7 +859,7 @@
         .form-group textarea {
             width: 100%;
             padding: 16px 20px;
-            background: #111318;
+            background: #1d1d1d;
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 12px;
             color: #fff;
@@ -929,6 +924,16 @@
         .footer p {
             color: #666;
             font-size: 0.95rem;
+        }
+
+        .profile-section .section-header h2,
+        .categories-section .section-header h2,
+        .experience-section .section-header h2,
+        .services-section .section-header h2 {
+            background: linear-gradient(135deg, #764BA2 0%, #667EEA 50%, #5A9AF3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
 /* Tablet & Mobile Optimization */
@@ -1173,14 +1178,11 @@
                     Hi, I'm<br>
                     <span class="highlight">Farhanul Hakim</span>
                 </h1>
-                <p class="tagline">Visual Creator</p>
+                <p class="tagline">Graphic Designer - Videographer - Video Editor - Photographer</p>
                 <p class="hero-description">
-                    I am a visual creative with a strong passion for the visual world.
-                    From graphic design, videography and photography, I approach
-                    every project with full dedication and commitment.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn-primary">Contact Me</a>
+                    <a href="#profile" class="btn-primary">Profile</a>
                     <a href="#portfolio" class="btn-secondary">Portfolio</a>
                     <a href="assets/CV Farhanul Hakim.pdf" id="downloadCvBtn" class="btn-secondary" download="CV_Farhanul_Hakim_2026">
                         <i class="fas fa-file-download"></i> CV</a>
@@ -1198,9 +1200,6 @@
                     <a href="https://www.pinterest.com/farhanulstudio/_created">
                          <i class="fab fa-pinterest social-icon"></i> Pinterest
                     </a>
-                    <a href="https://wa.me/6285159182330">
-                         <i class="fab fa-whatsapp social-icon"></i> WhatsApp
-                     </a>
                 </div>
             </div>
         </div>
@@ -1218,8 +1217,8 @@
                 <div class="profile-card">
                     <span class="profile-card-label">About Me</span>
                     <div class="profile-card-body">
-                        Saya merupakan videografer dengan pengalaman dalam produksi dan pengeditan video, didukung oleh latar belakang desain grafis. Saya berpengalaman dalam menangani proses pembuatan video secara menyeluruh, mulai dari pengambilan gambar hingga tahap pengeditan, untuk menghasilkan konten yang rapi, komunikatif, dan sesuai dengan kebutuhan klien. Terbiasa bekerja dengan alur yang terstruktur dan memperhatikan detail visual guna memastikan hasil video selaras dengan tujuan proyek.
-                    </div>
+                        I am a graphic design professional with over four years of experience, supported by expertise in videography and photography. I have experience producing effective and communicative visual works tailored to various media needs. I am accustomed to managing projects end to end, from concept development and visual production to post-production and editing, ensuring high-quality results aligned with project objectives.
+                        </div>
                 </div>
 
                 <!-- Education -->
@@ -1230,6 +1229,7 @@
                             <span class="profile-edu-year">2021 – 2024</span>
                             <div>
                                 <div class="profile-edu-name">MAN 3 Tasikmalaya</div>
+                                <div class="profile-edu-sub">Senior High School</div>
                             </div>
                         </div>
                         <div class="profile-edu-row">
@@ -1274,22 +1274,22 @@
                     <span class="profile-card-label">Software</span>
                     <div class="profile-software-list">
                         <div class="profile-software-item">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma"> Figma
+                            <img src="assets/logo/figma.png" alt="Figma"> Figma
                         </div>
                         <div class="profile-software-item">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" alt="Photoshop"> Photoshop
+                            <img src="assets/logo/photoshop.png" alt="Photoshop"> Photoshop
                         </div>
                         <div class="profile-software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Canva_Logo.svg" alt="Canva" style="border-radius:4px;"> Canva
+                            <img src="assets/logo/canva.png" alt="Canva"> Canva
                         </div>
                         <div class="profile-software-item">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-plain.svg" alt="Premier Pro"> Premier Pro
+                            <img src="assets/logo/premiere.png" alt="Premier Pro"> Premier Pro
                         </div>
                         <div class="profile-software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/CapCut_logo.svg/512px-CapCut_logo.svg.png" alt="Capcut" style="border-radius:4px;background:#fff;padding:2px;"> Capcut
+                            <img src="assets/logo/capcut.png" alt="Capcut"> Capcut
                         </div>
                         <div class="profile-software-item">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lightroom/lightroom-plain.svg" alt="Lightroom"> Lightroom
+                            <img src="assets/logo/lightroom.png" alt="Lightroom"> Lightroom
                         </div>
                     </div>
                 </div>
@@ -1360,13 +1360,14 @@
             <div class="experience-item">
                 <div class="experience-dot"></div>
                 <div class="experience-card">
-                    <p class="experience-date">Feb 2025 - May 2025</p>
-                    <h3 class="experience-company">Star4Hire</h3>
-                    <p class="experience-type">Agency</p>
+                    <p class="experience-date">Dec 2021 – Present</p>
+                    <h3 class="experience-company">Freelance Graphic Designer</h3>
+                    <p class="experience-type">Self Employed</p>
                     <ul class="experience-roles">
-                        <li>Designing visual content for social media needs.</li>
-                        <li>Maintaining visual identity consistency.</li>
-                        <li>Collaborating with the team to align designs with campaign strategies.</li>
+                        <li>Developing concepts and creating designs based on client needs.</li>
+                        <li>Translating client briefs into visuals aligned with brand positioning and target audience.</li>
+                        <li>Maintaining consistency in the brand’s visual identity.</li>
+                        <li>Coordinating directly with clients to ensure designs align with their expectations.</li>
                         <li>Optimizing designs to enhance visual appeal and increase engagement.</li>
                     </ul>
                 </div>
@@ -1375,7 +1376,7 @@
             <div class="experience-item">
                 <div class="experience-dot"></div>
                 <div class="experience-card">
-                    <p class="experience-date">Feb 2025 - Ags 2025</p>
+                    <p class="experience-date">Feb 2025 - Aug 2025</p>
                     <h3 class="experience-company">Ekspedisi Pelosok Negeri</h3>
                     <p class="experience-type">Non Governmental Organization</p>
                     <ul class="experience-roles">
@@ -1384,6 +1385,21 @@
                         <li>Documenting the entire event process through photography and videography.</li>
                         <li>Producing and editing documentation videos, including event aftermovies.</li>
                         <li>Ensuring all visual outputs maintain professional quality and consistent brand identity.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-dot"></div>
+                <div class="experience-card">
+                    <p class="experience-date">Feb 2025 - May 2025</p>
+                    <h3 class="experience-company">Star4Hire</h3>
+                    <p class="experience-type">Agency</p>
+                    <ul class="experience-roles">
+                        <li>Designing visual content for social media needs.</li>
+                        <li>Maintaining visual identity consistency.</li>
+                        <li>Collaborating with the team to align designs with campaign strategies.</li>
+                        <li>Optimizing designs to enhance visual appeal and increase engagement.</li>
                     </ul>
                 </div>
             </div>
@@ -1504,7 +1520,6 @@
         <p>&copy; 2026 Farhanul Studio</p>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Contact form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();

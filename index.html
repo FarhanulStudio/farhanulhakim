@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BQWY0X13F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6BQWY0X13F');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farhanul Hakim</title>
@@ -1558,7 +1567,6 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -1572,7 +1580,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
@@ -1580,9 +1587,9 @@ const cvBtn = document.getElementById('downloadCvBtn');
 
     if (cvBtn) {
         cvBtn.addEventListener('click', () => {
-            logEvent(analytics, 'download_cv', {
-                content_type: 'document',
-                file_name: 'CV_Farhanul_Hakim_2026.pdf'
+            gtag('event', 'download_cv', {
+                'content_type': 'document',
+                'file_name': 'CV_Farhanul_Hakim_2026.pdf'
             });
             console.log("Tracking Sent: CV Downloaded!"); 
         });

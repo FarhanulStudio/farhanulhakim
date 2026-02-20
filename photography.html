@@ -640,7 +640,7 @@
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <a href="#" class="logo">Farhanul Hakim</a>
+            <a href="index.html" class="logo">Farhanul Hakim</a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="design.html">Design</a>
@@ -875,6 +875,7 @@
 
     window.openDynamicGallery = (data) => {
         document.getElementById('modalTitle').textContent = data.title;
+        document.getElementById('modalDescription').textContent = data.description || '';
         document.getElementById('modalClient').textContent = data.client || '-';
         document.getElementById('modalYear').textContent = data.year || '-';
         document.getElementById('modalCat').textContent = data.category;

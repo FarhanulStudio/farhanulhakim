@@ -401,7 +401,7 @@
         .category-title {
             font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: -10px;
+            margin-bottom: -5px;
         }
 
         .category-count {
@@ -1125,23 +1125,20 @@
 
     /* Navbar Fix */
     .navbar {
-        top: 10px;
+        top: 15px;
         width: calc(100% - 30px);
-        padding: 12px 18px;
+        padding: 10px 18px;
         border-radius: 50px;
     }
 
-    /* Sembunyikan desktop nav links di mobile */
     .nav-links {
         display: none !important;
     }
 
-    /* Tampilkan mobile-nav-right */
     .mobile-nav-right {
         display: flex;
     }
 }
-
 
         /* Mobile nav right (hidden on desktop) */
         .mobile-nav-right {
@@ -1244,11 +1241,16 @@
             border-radius: 30px !important;
         }
         .mobile-nav-cta:hover { opacity: 0.9; }
+
         @media (max-width: 1024px) {
             .mobile-dropdown { display: block; }
             .mobile-nav-right { display: flex; }
         }
-        body.light-mode .mobile-dropdown.open { background: rgba(0,0,0,0.25); }
+
+        body.light-mode .mobile-dropdown.open { 
+            background: rgba(0,0,0,0.25); 
+        }
+
         body.light-mode .mobile-dropdown-card {
             background: rgba(255,255,255,0.88);
             backdrop-filter: blur(24px) saturate(180%);
@@ -1256,16 +1258,19 @@
             border-color: rgba(160,130,220,0.3);
             box-shadow: 0 20px 60px rgba(100,80,180,0.2), inset 0 1px 0 rgba(255,255,255,0.9);
         }
+
         body.light-mode .mobile-dropdown-close { color: #666; }
         body.light-mode .mobile-dropdown-close:hover { color: #333; }
         body.light-mode .mobile-nav-link { color: #667eea; }
         body.light-mode .mobile-nav-link:hover { background: rgba(102,126,234,0.08); }
+
         body.light-mode .mobile-dropdown-logo {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
         .theme-btn {
             background: transparent;
             border: none;
@@ -1277,6 +1282,7 @@
             display: flex;
             align-items: center;
         }
+
         .theme-btn:hover { color: #667eea; transform: scale(1.1); }
 
         /* === MODE TERANG (LIGHT MODE) === */
@@ -1305,7 +1311,7 @@
         /* Navbar Mode Terang */
         body.light-mode .navbar {
             background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(20px);
             border-color: rgba(160, 130, 220, 0.25);
             box-shadow: 0 8px 32px rgba(100, 80, 180, 0.1), inset 0 1px 0 rgba(255,255,255,0.8);
@@ -1318,12 +1324,20 @@
         /* Teks Utama Mode Terang */
         body.light-mode .hero-text h1 { color: #1e1540; }
         body.light-mode .section-header h2 { color: #1e1540; }
-        body.light-mode .profile-edu-name,
+
+        body.light-mode .tagline {
+            color: #4b4b4b !important; 
+        }
+
+        body.light-mode .profile-edu-name {
+            color: #4b4b4b !important; 
+        }
+
         body.light-mode .experience-company,
         body.light-mode .service-card h3,
         body.light-mode .contact-left h3,
         body.light-mode .form-group label { color: #1e1540; }
-        body.light-mode .section-header p { color: #6b5c9a; }
+        body.light-mode .section-header p { color: #4b4b4b; }
         body.light-mode .contact-left h3 { color: #1e1540; }
 
         /* Card & Box Mode Terang — Glassmorphism */
@@ -1357,13 +1371,27 @@
         }
 
         /* Teks Deskripsi Mode Terang */
-        body.light-mode .profile-card-body,
-        body.light-mode .profile-skill-item,
+        body.light-mode .profile-card-body {
+            color: #1b1b1b; 
+        }
+
+        body.light-mode .profile-skill-item {
+            color: #1b1b1b; 
+        }
+
         body.light-mode .profile-edu-row,
-        body.light-mode .profile-software-item,
-        body.light-mode .experience-roles li,
+        body.light-mode .profile-software-item {
+            color: #1b1b1b; 
+        }
+
+        body.light-mode .experience-roles li {
+            color: #1b1b1b; 
+        }
+        
         body.light-mode .service-list,
-        body.light-mode .service-card p,
+        body.light-mode .service-card p {
+            color: #1b1b1b; 
+        }
         body.light-mode .contact-left > p,
         body.light-mode .contact-info-text p,
         body.light-mode .tagline { color: #5a4a88; }
@@ -1792,13 +1820,13 @@
                 <h3>Let's Work Together</h3>
                 <p>Have a project or an idea? Let's bring it to life.</p>
 
-                <a href="/cdn-cgi/l/email-protection#5f393e2d373e312a332c2b2a3b36301f38323e3633713c3032" class="contact-info-card">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=farhanulstudio@gmail.com" class="contact-info-card">
                     <div class="contact-info-icon">
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="contact-info-text">
                         <h4>Email</h4>
-                        <p><span class="__cf_email__" data-cfemail="8aecebf8e2ebe4ffe6f9feffeee3e5caede7ebe3e6a4e9e5e7">[email&#160;protected]</span></p>
+                        <p>farhanulstudio@gmail.com</p>
                     </div>
                 </a>
 

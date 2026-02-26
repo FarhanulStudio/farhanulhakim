@@ -181,7 +181,6 @@
             background-size: cover;
             color: #2d2250;
         }
-        html.light-mode { background-color: #e8e4f5; }
 
         body.light-mode::before {
             content: '';
@@ -194,7 +193,7 @@
 
         body.light-mode .navbar {
             background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(20px);
             border-color: rgba(160, 130, 220, 0.25);
             box-shadow: 0 8px 32px rgba(100, 80, 180, 0.1), inset 0 1px 0 rgba(255,255,255,0.8);
@@ -220,6 +219,10 @@
         }
 
         body.light-mode .portfolio-item-inner { background: #f0ecff; }
+
+        body.light-mode .portfolio-title{
+            color: #ffffff !important;
+        }
 
         body.light-mode .modal { background: rgba(220, 210, 245, 0.97); }
         body.light-mode .modal-content {
@@ -697,10 +700,24 @@
 
         /* Mobile */
     @media (max-width: 768px) {
-        .navbar { padding: 15px 20px; }
-        .nav-links { display: none !important; }
-        .mobile-nav-right { display: flex; }
-        .menu-toggle { display: flex !important; }
+        .navbar { 
+            top: 15px;
+            width: calc(100% - 30px);
+            padding: 10px 18px;
+            border-radius: 50px;
+        }
+
+        .nav-links { 
+            display: none !important; 
+        }
+
+        .mobile-nav-right { 
+            display: flex; 
+        }
+
+        .menu-toggle { 
+            display: flex !important; 
+        }
 
         .header-section {
             padding: 100px 20px 30px !important;

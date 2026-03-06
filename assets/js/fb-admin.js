@@ -213,7 +213,7 @@ window.closeSuccessModal = () => {
       document.getElementById('videoUrl').value = `https://www.youtube.com/watch?v=${data.youtubeId}`;
       document.getElementById('videoYear').value = data.year || '2025';
       document.getElementById('videoClient').value = data.client || '';
-      document.getElementById('videoDuration').value = data.duration || '';
+      document.getElementById('videoRole').value = data.role || '';
       document.getElementById('videoTags').value = data.tags || '';
       document.getElementById('videoOrientation').value = data.orientation || 'landscape';
       if(data.coverUrl) {
@@ -306,7 +306,7 @@ document.getElementById('confirmDeleteBtn').onclick = async () => {
         }
         
         pData.client = document.getElementById('videoClient').value;
-        pData.duration = document.getElementById('videoDuration').value;
+        pData.role = document.getElementById('videoRole').value;
         pData.tags = document.getElementById('videoTags').value;
         pData.orientation = document.getElementById('videoOrientation').value;
 

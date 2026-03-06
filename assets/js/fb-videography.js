@@ -78,7 +78,7 @@ async function loadVideos() {
                 document.getElementById('modalClient').textContent = data.client || '-';
                 document.getElementById('modalYear').textContent = data.year || '2025';
                 document.getElementById('modalCat').textContent = data.category;
-                document.getElementById('modalDuration').textContent = data.duration || '-';
+                document.getElementById('modalRole').textContent = data.role || '-';
                 
                 const videoContainer = document.getElementById('videoContainer');
             

@@ -916,14 +916,6 @@
             font-weight: 600;
         }
 
-        /* Footer */
-        .footer {
-            padding: 30px 40px;
-            background: #0f0f0f;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
         .footer p {
             color: #666;
             font-size: 0.95rem;
@@ -932,7 +924,8 @@
         .profile-section .section-header h2,
         .categories-section .section-header h2,
         .experience-section .section-header h2,
-        .services-section .section-header h2 {
+        .services-section .section-header h2,
+        .filter-section .section-header h2 {
             background: linear-gradient(135deg, #764BA2 0%, #667EEA 50%, #5A9AF3 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -2135,14 +2128,6 @@
             scrollbar-gutter: stable;
         }
 
-        /* Footer */
-        .footer {
-            padding: 30px 40px;
-            background: #0f0f0f;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
         .footer p {
             color: #666;
             font-size: 0.95rem;
@@ -2334,10 +2319,22 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(160,130,220,0.2);
         }
-        body.light-mode .modal-title { color: #1e1540; }
-        body.light-mode .modal-description { color: #5a4a88; }
-        body.light-mode .modal-info { border-color: rgba(160,130,220,0.2); }
-        body.light-mode .info-item p { color: #5a4a88; }
+        body.light-mode .modal-title { 
+            color: #1e1540; 
+        }
+
+        body.light-mode .modal-description { 
+            color: #5a4a88; 
+        }
+
+        body.light-mode .modal-info { 
+            border-color: rgba(160,130,220,0.2); 
+        }
+
+        body.light-mode .info-item p { 
+            color: #5a4a88; 
+        }
+        
         body.light-mode .close-modal {
             background: rgba(160,130,220,0.15);
             color: #4a3b7a;
@@ -2347,11 +2344,6 @@
         html.light-mode ::-webkit-scrollbar-track { background: #e0daf0; }
         html.light-mode ::-webkit-scrollbar-thumb { border-color: #e0daf0; }
 
-        body.light-mode .footer {
-            background: rgba(220, 210, 245, 0.6);
-            backdrop-filter: blur(12px);
-            border-color: rgba(160, 130, 220, 0.2);
-        }
         body.light-mode .footer p { color: #7060a8; }
 
         /* Light mode mobile dropdown */

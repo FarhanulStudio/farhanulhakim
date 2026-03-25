@@ -78,6 +78,8 @@
                 </button>
                 <div class="menu-toggle" id="menuToggle">
                     <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
         </div>
@@ -234,6 +236,34 @@
         </div>
     </section>
 
+    <!-- Filter -->
+    <section class="filter-section" id="filter">
+        <div class="section-header">
+            <h2>My Portfolio</h2>
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="Social Media">Social Media</button>
+            <button class="filter-btn" data-filter="Poster">Poster</button>
+            <button class="filter-btn" data-filter="Banner">Banner</button>
+            <button class="filter-btn" data-filter="Book">Book</button>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-section">
+        <div class="portfolio-grid" id="portfolioGrid">
+            <div class="loading-state" style="color: white; grid-column: 1/-1; text-align: center; padding: 50px;">
+                <p>Loading...</p>
+            </div>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            <i class="fas fa-folder-open"></i>
+            <p>Kosong Bos kek Hati</p>
+        </div>
+    </section>
+
     <!-- Experience Section -->
     <section class="experience-section" id="experience">
         <div class="section-header">
@@ -301,34 +331,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Filter -->
-    <section class="filter-section" id="filter">
-        <div class="section-header">
-            <h2>My Portfolio</h2>
-        </div>
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">All Projects</button>
-            <button class="filter-btn" data-filter="Social Media">Social Media</button>
-            <button class="filter-btn" data-filter="Poster">Poster</button>
-            <button class="filter-btn" data-filter="Banner">Banner</button>
-            <button class="filter-btn" data-filter="Book">Book</button>
-        </div>
-    </section>
-
-    <!-- Portfolio Grid -->
-    <section class="portfolio-section">
-        <div class="portfolio-grid" id="portfolioGrid">
-            <div class="loading-state" style="color: white; grid-column: 1/-1; text-align: center; padding: 50px;">
-                <p>Loading...</p>
-            </div>
-        </div>
-
-        <div class="empty-state" id="emptyState">
-            <i class="fas fa-folder-open"></i>
-            <p>Kosong Bos kek Hati</p>
         </div>
     </section>
 

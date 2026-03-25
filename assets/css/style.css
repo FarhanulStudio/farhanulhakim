@@ -643,7 +643,7 @@
 
         /* Experience Section */
         .experience-section {
-            padding: 60px 60px 40px 60px;
+            padding: 20px 60px 40px 60px;
         }
 
         .experience-timeline {
@@ -1691,7 +1691,7 @@
 
         /* Portfolio Grid */
         .portfolio-section {
-            padding: 0 60px 100px;
+            padding: 0 60px 20px;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -1928,7 +1928,7 @@
         }
         @media (max-width: 600px) {
             .grid-sizer, .portfolio-item { width: 100%; }
-            .portfolio-section { padding: 0 20px 60px; }
+            .portfolio-section { padding: 0 20px 20px; }
         }
 
         /* Mobile */
@@ -1986,7 +1986,7 @@
     }
 
     .portfolio-section {
-        padding: 0 15px 60px;
+        padding: 0 15px 20px;
     }
 
     .portfolio-grid {
@@ -2504,7 +2504,7 @@
 
         /* Portfolio Grid */
         .portfolio-section {
-            padding: 0 60px 100px;
+            padding: 0 60px 20px;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -2827,7 +2827,7 @@
         }
 
         .portfolio-section {
-            padding: 0 15px 60px !important;
+            padding: 0 15px 20px !important;
         }
         
         .portfolio-grid {

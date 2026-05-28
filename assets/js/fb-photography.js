@@ -42,6 +42,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 
                 card.className = `portfolio-item ${data.layout || 'portrait'}`;
                 card.setAttribute('data-category', data.category);
+
+                const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                card.setAttribute('data-slug', slug);
                 
                 const coverImage = data.coverUrl || (data.images && data.images.length > 0 ? data.images[0] : 'https://via.placeholder.com/400');
 
@@ -75,6 +78,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
                             }
                         }
 
+                        window.history.pushState({slug: slug}, '', '?project=' + slug);
                         openDynamicGallery(data);
             };
 
@@ -92,6 +96,18 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
             });
 
             setupFilterButtons();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectSlug = urlParams.get('project');
+
+            if(projectSlug) {
+                const targetCard = document.querySelector(`.portfolio-item[data-slug="${projectSlug}"]`);
+                if(targetCard) {
+                    // Biar langsung kebuka di HP juga (ngelewatin mode hover)
+                    targetCard.classList.add('mobile-active'); 
+                    targetCard.click();
+                }
+            }
 
         } catch (err) {
             console.error("Gagal load photos:", err);
@@ -159,6 +175,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
     window.closeGallery = () => {
         document.getElementById('modal').classList.remove('active');
         document.body.style.overflow = 'auto';
+        window.history.pushState({}, '', window.location.pathname);
     };
 
     window.openLightbox = (imageUrl) => {

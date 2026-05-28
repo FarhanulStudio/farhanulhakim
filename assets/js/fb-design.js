@@ -38,6 +38,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
                     const card = document.createElement('div');
                     card.className = 'portfolio-item';
                     card.setAttribute('data-category', data.category);
+
+                    const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    card.setAttribute('data-slug', slug);
                     
                     const rawCover = data.coverUrl || (data.images && data.images.length > 0 ? data.images[0] : (data.imageUrl || 'https://via.placeholder.com/400'));
                     const coverImage = rawCover.replace('/upload/', '/upload/f_auto,q_auto/');
@@ -73,6 +76,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
                                 return; 
                             }
                         }
+
+                        window.history.pushState({slug: slug}, '', '?project=' + slug);
+
+                        document.getElementById('mTitle').textContent = data.title;
 
                         // === KODINGAN BUKA MODAL (Jalan pas klik ke-2 di HP, atau klik biasa di Desktop) ===
                         document.getElementById('mTitle').textContent = data.title;
@@ -118,6 +125,17 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
                 });
 
                 setupFilterButtons();
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const projectSlug = urlParams.get('project');
+
+                if(projectSlug) {
+                   const targetCard = document.querySelector(`.portfolio-item[data-slug="${projectSlug}"]`);
+                   if(targetCard) {
+                   targetCard.classList.add('mobile-active'); 
+                   targetCard.click();
+            }
+        }
 
             } catch (err) {
                 console.error("Gagal load:", err);
@@ -166,6 +184,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 
         window.closePortfolioModal = () => {
             document.getElementById('portfolioModal').classList.remove('active');
+            window.history.pushState({}, '', window.location.pathname);
         };
 
         document.getElementById('portfolioModal').addEventListener('click', function(e) {

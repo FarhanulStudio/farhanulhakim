@@ -35,6 +35,8 @@ async function loadVideos() {
             const orientation = data.orientation || 'landscape';
             
             card.className = `portfolio-item ${orientation}`;
+            const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+            card.setAttribute('data-slug', slug);
             card.setAttribute('data-category', data.category ? data.category.toLowerCase() : 'various');
 
             const thumbUrl = data.coverUrl || `https://img.youtube.com/vi/${data.youtubeId}/maxresdefault.jpg`;
@@ -61,6 +63,8 @@ async function loadVideos() {
                 `;
 
             card.onclick = () => {
+
+                window.history.pushState({slug: slug}, '', '?project=' + slug);
 
             if (window.innerWidth <= 768) {
                             if (!card.classList.contains('mobile-active')) {
@@ -123,6 +127,15 @@ async function loadVideos() {
 
         setupFilter(); 
 
+        // BACA URL & BUKA MODAL OTOMATIS
+const urlParams = new URLSearchParams(window.location.search);
+const projectSlug = urlParams.get('project');
+
+if(projectSlug) {
+    const targetCard = document.querySelector(`.portfolio-item[data-slug="${projectSlug}"]`);
+    if(targetCard) targetCard.click();
+}
+
     } catch (error) {
         console.error("Error load video:", error);
         grid.innerHTML = '<p style="grid-column: 1/-1;text-align: center; color: red;">Failed to load videos</p>';
@@ -165,6 +178,8 @@ window.closeModal = () => {
     document.getElementById('modal').classList.remove('active');
     document.body.style.overflow = 'auto';
     document.getElementById('youtubeVideo').src = '';
+
+    window.history.pushState({}, '', window.location.pathname);
 };
 
 loadVideos();

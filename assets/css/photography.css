@@ -466,7 +466,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 30px;
+            padding: 30px 30px 20px 20px;
         }
 
         .portfolio-item:hover .portfolio-overlay {
@@ -474,15 +474,17 @@
         }
 
         .portfolio-title {
-            font-size: 1.5rem;
+            font-size: 1rem;
+            line-height: 1,1;
             font-weight: 700;
-            margin-bottom: 0px;
+            margin-bottom: 2px;
         }
 
         .portfolio-category {
             font-size: 0.9rem;
             color: #888;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            line-height: 1;
         }
 
         .portfolio-tags {
@@ -495,9 +497,9 @@
         .tag {
             background: rgba(102, 126, 234, 0.15); 
             color: #667eea;
-            padding: 4px 14px;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.6rem;
             font-weight: 500;
             border: 1px solid rgba(102, 126, 234, 0.2);
         }
@@ -885,7 +887,7 @@
 /* Biar tetep cakep pas dibuka di HP */
 @media (max-width: 768px) {
     .hero-photo-cover {
-        height: 60vh;
+        height: 100vh;
         background-attachment: scroll; 
     }
     .hero-photo-content h1 {
